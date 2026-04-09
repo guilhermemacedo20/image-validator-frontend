@@ -44,11 +44,19 @@ export function AuthProvider({ children }) {
 
   const fetchUser = async () => {
     try {
+      const token = localStorage.getItem('accessToken')
+
+      if (!token) {
+        setUser(null)
+        setLoading(false)
+        return
+      }
+
       const res = await api.get('/auth/me')
       setUser(res.data.user)
     } catch {
-      localStorage.clear()
       setUser(null)
+      localStorage.clear()
     } finally {
       setLoading(false)
     }
