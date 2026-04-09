@@ -35,6 +35,10 @@ export default function Login() {
     }
   }
 
+  const handleCreateAccount = async () => {
+    navigate('/register')
+  }
+
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-6 rounded shadow w-80">
@@ -58,6 +62,13 @@ export default function Login() {
           className="bg-green-500 text-white w-full p-2 rounded"
         >
           Entrar
+        </button>
+
+        <button
+          onClick={handleCreateAccount}
+          className="text-blue-500 w-full p-2 mt-2"
+        >
+          Não possui conta? Cadastre-se
         </button>
       </div>
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}

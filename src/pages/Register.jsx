@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 
 export default function Register() {
   const { register } = useAuth()
+  const [accountCreated, setAccountCreated] = useState(false)
+
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
@@ -14,11 +16,15 @@ export default function Register() {
     try {
       setError("")
       await register(email, password)
-      alert("Conta criada com sucesso!")
-      navigate("/")
+      setAccountCreated(true)
+      setTimeout(() => navigate("/"), 2000)
     } catch (err) {
       setError(err.response?.data?.error || "Erro ao criar conta")
     }
+  }
+
+  const handleLogin = async () => {
+    navigate('/')
   }
 
   return (
@@ -47,6 +53,14 @@ export default function Register() {
         >
           Criar conta
         </button>
+
+        <button
+          onClick={handleLogin}
+          className="bg-green-500 text-white w-full mt-2 p-2 rounded"
+        >
+          Fazer login
+        </button>
+        {accountCreated && <p className="text-green-500 text-sm mt-2">Conta criada com sucesso! Faça login.</p>}
       </div>
     </div>
   )
