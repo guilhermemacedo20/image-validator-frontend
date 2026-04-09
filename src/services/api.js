@@ -1,4 +1,17 @@
+import axios from 'axios'
 import { environment } from '../config/environment'
+
+export const api = axios.create({
+  baseURL: environment.backend.url,
+})
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
 
 api.interceptors.response.use(
   (res) => res,
