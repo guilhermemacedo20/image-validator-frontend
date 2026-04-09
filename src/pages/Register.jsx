@@ -2,43 +2,29 @@ import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 
-export default function Login() {
-  const { login } = useAuth()
+export default function Register() {
+  const { register } = useAuth()
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
   const [error, setError] = useState("")
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       setError("")
-      const res = await login(email, password)
-
-      if (res.requiresTwoFactor) {
-        navigate('/2fa', { state: { email, password } })
-        return
-      }
-
-      navigate('/dashboard')
+      await register(email, password)
+      alert("Conta criada com sucesso!")
+      navigate("/")
     } catch (err) {
-      const message = err.response?.data?.error
-
-      if (message === 'User not found') {
-        setError("Usuário não encontrado")
-      } else if (message === 'Invalid password') {
-        setError("Senha inválida")
-      } else {
-        setError("Erro ao realizar login")
-      }
+      setError(err.response?.data?.error || "Erro ao criar conta")
     }
   }
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-6 rounded shadow w-80">
-        <h1 className="text-xl mb-4 font-bold text-center">Login</h1>
+        <h1 className="text-xl mb-4 font-bold text-center">Criar Conta</h1>
 
         <input
           placeholder="Email"
@@ -53,14 +39,15 @@ export default function Login() {
           className="border p-2 mb-4 w-full"
         />
 
+        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+
         <button
-          onClick={handleLogin}
-          className="bg-green-500 text-white w-full p-2 rounded"
+          onClick={handleRegister}
+          className="bg-blue-500 text-white w-full p-2 rounded"
         >
-          Entrar
+          Criar conta
         </button>
       </div>
-      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
     </div>
   )
 }

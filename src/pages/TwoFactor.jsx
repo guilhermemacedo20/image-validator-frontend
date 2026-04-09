@@ -11,12 +11,15 @@ export default function TwoFactor() {
 
   const [code, setCode] = useState("")
 
+  const [error, setError] = useState("")
+
   const handleVerify = async () => {
     try {
+      setError("")
       await login(email, password, code)
       navigate('/dashboard')
-    } catch {
-      alert("Código inválido")
+    } catch (err) {
+      setError("Código 2FA inválido")
     }
   }
 
@@ -38,6 +41,7 @@ export default function TwoFactor() {
           Validar
         </button>
       </div>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
     </div>
   )
 }

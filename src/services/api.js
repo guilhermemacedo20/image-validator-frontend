@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { environment } from '../config/environment'
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: environment.backend.url,
 })
 
 api.interceptors.request.use((config) => {
@@ -23,9 +24,10 @@ api.interceptors.response.use(
       try {
         const refreshToken = localStorage.getItem('refreshToken')
 
-        const res = await axios.post('http://localhost:3000/api/auth/refresh', {
-          refreshToken
-        })
+        const res = await axios.post(
+          `${environment.backend.url}/auth/refresh`,
+          { refreshToken }
+        )
 
         localStorage.setItem('accessToken', res.data.accessToken)
         localStorage.setItem('refreshToken', res.data.refreshToken)

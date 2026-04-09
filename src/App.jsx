@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import TwoFactor from "./pages/TwoFactor"
+import Register from "./pages/Register"
 import PrivateRoute from "./routes/PrivateRoute"
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/2fa" element={<TwoFactor />} />
+        <Route path="/register" element={<Register />} />
 
         <Route
           path="/dashboard"

@@ -1,16 +1,17 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { api } from "../services/api"
 
 const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const login = async (email, password, twoFactorCode = null) => {
     const res = await api.post('/auth/login', {
       email,
       password,
-      twoFactorCode
+      twoFactorCode,
     })
 
     if (res.data.requiresTwoFactor) {
@@ -25,20 +26,47 @@ export function AuthProvider({ children }) {
     return { success: true }
   }
 
+  const register = async (email, password) => {
+    return api.post('/auth/register', { email, password })
+  }
+
   const logout = async () => {
     const refreshToken = localStorage.getItem('refreshToken')
 
-    await api.post('/auth/logout', { refreshToken })
+    try {
+      await api.post('/auth/logout', { refreshToken })
+    } catch {}
 
     localStorage.clear()
     setUser(null)
+    window.location.href = '/'
   }
 
+  const fetchUser = async () => {
+    try {
+      const res = await api.get('/auth/me')
+      setUser(res.data.user)
+    } catch {
+      localStorage.clear()
+      setUser(null)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )
 }
 
-export const useAuth = () => useContext(AuthContext)
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) throw new Error('useAuth deve estar dentro do AuthProvider')
+  return context
+}
