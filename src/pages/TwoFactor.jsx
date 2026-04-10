@@ -17,7 +17,7 @@ export default function TwoFactor() {
     try {
       setError("")
       await login(email, password, code)
-      navigate('/dashboard')
+      navigate('/my-account')
     } catch (err) {
       setError("Código 2FA inválido")
     }

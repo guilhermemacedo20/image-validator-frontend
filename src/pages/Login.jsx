@@ -21,17 +21,18 @@ export default function Login() {
         return
       }
 
-      navigate('/dashboard')
+      navigate('/my-account')
     } catch (err) {
       const message = err.response?.data?.error
-
-      if (message === 'User not found') {
-        setError("Usuário não encontrado")
+      if (message === 'Credenciais inválidas') {
+        setError("Usuário ou senha inválidos")
       } else if (message === 'Invalid password') {
         setError("Senha inválida")
       } else {
         setError("Erro ao realizar login")
       }
+
+      setTimeout(() => setError(""), 3000)
     }
   }
 
@@ -64,14 +65,15 @@ export default function Login() {
           Entrar
         </button>
 
+        {error && <p className="text-red-500 text-sm my-2 text-center">{error}</p>}
+
         <button
           onClick={handleCreateAccount}
           className="text-blue-500 w-full p-2 mt-2"
         >
           Não possui conta? Cadastre-se
         </button>
-      </div>
-      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      </div>      
     </div>
   )
 }

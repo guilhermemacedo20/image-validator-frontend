@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
       }
 
       const res = await api.get('/auth/me')
+
       setUser(res.data.user)
     } catch {
       setUser(null)
@@ -67,7 +68,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, fetchUser }}>
       {children}
     </AuthContext.Provider>
   )
