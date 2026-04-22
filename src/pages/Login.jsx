@@ -55,8 +55,15 @@ export default function Login() {
           type="password"
           placeholder="Senha"
           onChange={e => setPassword(e.target.value)}
-          className="border p-2 mb-4 w-full"
+          className="border p-2 w-full"
         />
+
+        <button
+          onClick={() => navigate('/forgot-password')}
+          className="text-sm text-blue-500 mt-0 mb-4"
+        >
+          Esqueci minha senha
+        </button>
 
         <button
           onClick={handleLogin}
@@ -72,12 +79,6 @@ export default function Login() {
           className="text-blue-500 w-full p-2 mt-2"
         >
           Não possui conta? Cadastre-se
-        </button>
-        <button
-          onClick={() => navigate('/forgot-password')}
-          className="text-sm text-blue-500 mt-2 w-full"
-        >
-          Esqueci minha senha
         </button>
       </div>      
     </div>
