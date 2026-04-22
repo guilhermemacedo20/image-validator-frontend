@@ -73,6 +73,12 @@ export default function Login() {
         >
           Não possui conta? Cadastre-se
         </button>
+        <button
+          onClick={() => navigate('/forgot-password')}
+          className="text-sm text-blue-500 mt-2 w-full"
+        >
+          Esqueci minha senha
+        </button>
       </div>      
     </div>
   )

@@ -42,6 +42,17 @@ export function AuthProvider({ children }) {
     window.location.href = '/'
   }
 
+  const forgotPassword = async (email) => {
+    return api.post('/auth/forgot-password', { email })
+  }
+
+  const resetPassword = async (token, newPassword) => {
+    return api.post('/auth/reset-password', {
+      token,
+      newPassword,
+    })
+  }
+
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem('accessToken')
@@ -68,7 +79,16 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, fetchUser }}>
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      login,
+      register,
+      logout,
+      fetchUser,
+      forgotPassword,
+      resetPassword
+    }}>
       {children}
     </AuthContext.Provider>
   )
