@@ -16,26 +16,21 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const originalRequest = error.config
-
+    const originalRequest = error.config || {}
     const refreshToken = localStorage.getItem('refreshToken')
+    const url = originalRequest.url || ''
+    const shouldSkipRefresh = ['/auth/login', '/auth/refresh', '/auth/register', '/auth/forgot-password', '/auth/reset-password'].some((path) => url.includes(path))
 
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      refreshToken
-    ) {
+    if (error.response?.status === 401 && !originalRequest._retry && refreshToken && !shouldSkipRefresh) {
       originalRequest._retry = true
 
       try {
-        const res = await axios.post(
-          `${environment.backend.url}/auth/refresh`,
-          { refreshToken }
-        )
+        const res = await axios.post(`${environment.backend.url}/auth/refresh`, { refreshToken })
 
         localStorage.setItem('accessToken', res.data.accessToken)
         localStorage.setItem('refreshToken', res.data.refreshToken)
 
+        originalRequest.headers = originalRequest.headers || {}
         originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`
 
         return api(originalRequest)

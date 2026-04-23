@@ -10,6 +10,7 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [consent, setConsent] = useState(false)
   const [error, setError] = useState('')
 
   const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
@@ -51,7 +52,12 @@ export default function Register() {
         return
       }
 
-      await register(email, password)
+      if (!consent) {
+        setError('Você precisa aceitar os termos e a política de privacidade')
+        return
+      }
+
+      await register(email, password, consent)
       setAccountCreated(true)
       setTimeout(() => navigate('/'), 2000)
     } catch (err) {
@@ -100,6 +106,11 @@ export default function Register() {
             {isMatch ? '✔ Senhas coincidem' : '✖ Senhas não coincidem'}
           </span>
         )}
+
+        <label className="flex items-start gap-2 text-sm text-gray-700">
+          <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
+          <span>Aceito os termos de uso e a política de privacidade para fins de autenticação e uso da plataforma.</span>
+        </label>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 

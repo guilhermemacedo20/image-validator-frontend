@@ -1,25 +1,29 @@
-import { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 export default function TwoFactor() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const twoFactorToken = location.state?.twoFactorToken || ''
 
-  const { email, password } = location.state || {}
+  const [code, setCode] = useState('')
+  const [error, setError] = useState('')
 
-  const [code, setCode] = useState("")
-
-  const [error, setError] = useState("")
+  useEffect(() => {
+    if (!twoFactorToken) {
+      navigate('/')
+    }
+  }, [twoFactorToken, navigate])
 
   const handleVerify = async () => {
     try {
-      setError("")
-      await login(email, password, code)
+      setError('')
+      await login(null, null, code, twoFactorToken)
       navigate('/my-account')
     } catch (err) {
-      setError("Código 2FA inválido")
+      setError(err.response?.data?.error || 'Código 2FA inválido')
     }
   }
 
@@ -30,18 +34,17 @@ export default function TwoFactor() {
 
         <input
           placeholder="Código 2FA"
-          onChange={e => setCode(e.target.value)}
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
           className="border p-2 mb-4 w-full"
         />
 
-        <button
-          onClick={handleVerify}
-          className="bg-blue-500 text-white w-full p-2 rounded"
-        >
+        <button onClick={handleVerify} className="bg-blue-500 text-white w-full p-2 rounded">
           Validar
         </button>
+
+        {error && <p className="text-red-500 text-sm mt-3 text-center">{error}</p>}
       </div>
-      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
     </div>
   )
 }

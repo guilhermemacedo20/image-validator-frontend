@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { api } from "../services/api"
+import { createContext, useContext, useEffect, useState } from 'react'
+import { api } from '../services/api'
 
 const AuthContext = createContext()
 
@@ -7,27 +7,36 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const login = async (email, password, twoFactorCode = null) => {
-    const res = await api.post('/auth/login', {
-      email,
-      password,
-      twoFactorCode,
-    })
-
-    if (res.data.requiresTwoFactor) {
-      return { requiresTwoFactor: true }
-    }
-
-    localStorage.setItem('accessToken', res.data.accessToken)
-    localStorage.setItem('refreshToken', res.data.refreshToken)
-
-    setUser(res.data.user)
-
+  const completeLogin = async (payload) => {
+    localStorage.setItem('accessToken', payload.accessToken)
+    localStorage.setItem('refreshToken', payload.refreshToken)
+    await fetchUser()
     return { success: true }
   }
 
-  const register = async (email, password) => {
-    return api.post('/auth/register', { email, password })
+  const login = async (email, password, twoFactorCode = null, twoFactorToken = null) => {
+    const body = {}
+
+    if (twoFactorToken) {
+      body.twoFactorToken = twoFactorToken
+      body.twoFactorCode = twoFactorCode
+    } else {
+      body.email = email
+      body.password = password
+      if (twoFactorCode) body.twoFactorCode = twoFactorCode
+    }
+
+    const res = await api.post('/auth/login', body)
+
+    if (res.data.requiresTwoFactor) {
+      return { requiresTwoFactor: true, twoFactorToken: res.data.twoFactorToken }
+    }
+
+    return completeLogin(res.data)
+  }
+
+  const register = async (email, password, consent) => {
+    return api.post('/auth/register', { email, password, consent })
   }
 
   const logout = async () => {
@@ -42,21 +51,15 @@ export function AuthProvider({ children }) {
     window.location.href = '/'
   }
 
-  const forgotPassword = async (email) => {
-    return api.post('/auth/forgot-password', { email })
-  }
+  const forgotPassword = async (email) => api.post('/auth/forgot-password', { email })
 
   const resetPassword = async (token, newPassword) => {
-    return api.post('/auth/reset-password', {
-      token,
-      newPassword,
-    })
+    return api.post('/auth/reset-password', { token, newPassword })
   }
 
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem('accessToken')
-
       if (!token) {
         setUser(null)
         setLoading(false)
@@ -64,7 +67,6 @@ export function AuthProvider({ children }) {
       }
 
       const res = await api.get('/auth/me')
-
       setUser(res.data.user)
     } catch {
       setUser(null)
@@ -79,16 +81,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      loading,
-      login,
-      register,
-      logout,
-      fetchUser,
-      forgotPassword,
-      resetPassword
-    }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, fetchUser, forgotPassword, resetPassword }}>
       {children}
     </AuthContext.Provider>
   )

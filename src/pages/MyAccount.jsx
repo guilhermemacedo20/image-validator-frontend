@@ -15,6 +15,7 @@ export default function MyAccount() {
   const [code, setCode] = useState('')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [exportedData, setExportedData] = useState('')
 
   useEffect(() => {
     setFirstName(user?.firstName || '')
@@ -39,13 +40,7 @@ export default function MyAccount() {
         return
       }
 
-      const res = await api.put('/user/profile', {
-        firstName,
-        lastName,
-        phone,
-        address,
-      })
-
+      const res = await api.put('/user/profile', { firstName, lastName, phone, address })
       setFirstName(res.data.user.firstName)
       setLastName(res.data.user.lastName)
       setPhone(res.data.user.phone)
@@ -102,23 +97,53 @@ export default function MyAccount() {
     }
   }
 
+  const handleExportData = async () => {
+    try {
+      const res = await api.get('/user/export')
+      setExportedData(JSON.stringify(res.data.data, null, 2))
+      setMessage('Dados exportados com sucesso')
+    } catch (error) {
+      setMessage(error.response?.data?.error || '❌ Erro ao exportar dados')
+    }
+  }
+
+  const handleRevokeConsent = async () => {
+    try {
+      await api.post('/user/revoke-consent')
+      await fetchUser()
+      setMessage('Consentimento revogado com sucesso')
+    } catch (error) {
+      setMessage(error.response?.data?.error || '❌ Erro ao revogar consentimento')
+    }
+  }
+
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm('Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.')
+    if (!confirmed) return
+
+    try {
+      await api.delete('/user')
+      localStorage.clear()
+      window.location.href = '/'
+    } catch (error) {
+      setMessage(error.response?.data?.error || '❌ Erro ao excluir conta')
+    }
+  }
+
   return (
-    <div className="p-10 max-w-xl mx-auto">
-      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+    <div className="p-10 max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6">
         <h1 className="text-2xl font-bold mb-6 text-center uppercase">Minha Conta</h1>
 
         <div className="flex gap-2 mb-6">
-          <button
-            onClick={() => setTab('profile')}
-            className={`flex-1 p-2 rounded ${tab === 'profile' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
-          >
+          <button onClick={() => setTab('profile')} className={`flex-1 p-2 rounded ${tab === 'profile' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
             Dados
           </button>
-          <button
-            onClick={() => setTab('security')}
-            className={`flex-1 p-2 rounded ${tab === 'security' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
-          >
+          <button onClick={() => setTab('security')} className={`flex-1 p-2 rounded ${tab === 'security' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
             Segurança
+          </button>
+          <button onClick={() => setTab('privacy')} className={`flex-1 p-2 rounded ${tab === 'privacy' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
+            Privacidade
           </button>
         </div>
 
@@ -128,6 +153,7 @@ export default function MyAccount() {
             <input placeholder="Sobrenome" value={lastName} onChange={(e) => setLastName(e.target.value)} className="border p-2 rounded" />
             <input placeholder="Telefone" value={phone} onChange={(e) => setPhone(e.target.value)} className="border p-2 rounded" />
             <input placeholder="Endereço" value={address} onChange={(e) => setAddress(e.target.value)} className="border p-2 rounded" />
+            <p className="text-sm text-gray-600">Consentimento: {user?.consent ? 'ativo' : 'revogado'} {user?.consentDate ? `• ${new Date(user.consentDate).toLocaleString('pt-BR')}` : ''}</p>
 
             {profileMessage && <p className="text-sm">{profileMessage}</p>}
 
@@ -154,12 +180,7 @@ export default function MyAccount() {
               <div className="flex flex-col gap-3">
                 <p>Escaneie o QR Code:</p>
                 <img src={qrCode} alt="QR Code" className="w-40" />
-                <input
-                  placeholder="Digite o código"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="border p-2 rounded"
-                />
+                <input placeholder="Digite o código" value={code} onChange={(e) => setCode(e.target.value)} className="border p-2 rounded" />
                 <button onClick={handleConfirm2FA} className="bg-green-500 text-white p-2 rounded">
                   Confirmar
                 </button>
@@ -168,6 +189,24 @@ export default function MyAccount() {
 
             {message && <p className="mt-3 text-sm font-medium">{message}</p>}
             {loading && <p className="text-sm text-gray-500 mt-2">Processando...</p>}
+          </div>
+        )}
+
+        {tab === 'privacy' && (
+          <div className="flex flex-col gap-3">
+            <button onClick={handleExportData} className="bg-indigo-500 text-white p-2 rounded">
+              Exportar meus dados
+            </button>
+            <button onClick={handleRevokeConsent} className="bg-yellow-500 text-white p-2 rounded">
+              Revogar consentimento
+            </button>
+            <button onClick={handleDeleteAccount} className="bg-red-600 text-white p-2 rounded">
+              Excluir minha conta
+            </button>
+
+            {exportedData && (
+              <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-72">{exportedData}</pre>
+            )}
           </div>
         )}
 
