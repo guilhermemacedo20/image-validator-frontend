@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../services/api'
+import { useNavigate } from 'react-router-dom'
+import PageContainer from '../components/PageContainer'
 
 export default function MyAccount() {
   const { logout, user, fetchUser } = useAuth()
+  const navigate = useNavigate()
 
   const [tab, setTab] = useState('profile')
   const [firstName, setFirstName] = useState('')
@@ -131,9 +134,11 @@ export default function MyAccount() {
   }
 
   return (
-    <div className="p-10 max-w-3xl mx-auto">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center uppercase">Minha Conta</h1>
+    
+    <PageContainer title="Minha Conta">
+      <button onClick={() => navigate('/analyze-image')} className="text-blue-500 w-full p-2 my-2">
+          Analisar Imagem
+        </button>   
 
         <div className="flex gap-2 mb-6">
           <button onClick={() => setTab('profile')} className={`flex-1 p-2 rounded ${tab === 'profile' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
@@ -210,10 +215,11 @@ export default function MyAccount() {
           </div>
         )}
 
+        
+
         <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded mt-6 w-full">
           Logout
         </button>
-      </div>
-    </div>
+      </PageContainer>
   )
 }
