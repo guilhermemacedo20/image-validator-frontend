@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import AuthLayout from '../components/AuthLayout'
 
 export default function Register() {
   const { register } = useAuth()
@@ -66,24 +67,32 @@ export default function Register() {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-96 flex flex-col gap-3">
-        <h1 className="text-xl font-bold text-center uppercase">Criar Conta</h1>
-
+    <AuthLayout title="Criar Conta" subtitle="Preencha os campos para criar sua conta">
+    <div className=" flex flex-col gap-3">
+        <div className="relative">
         <input
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`p-2 rounded border ${getInputBorder(isValidEmail(email), email)}`}
+          className={`w-full px-4 py-3 pl-11 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${getInputBorder(isValidEmail(email), email)}`}
         />
+         <span className="absolute left-3 top-3 text-gray-400">
+          @
+        </span>
+        </div>
 
+        <div className="relative">
         <input
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className={`p-2 rounded border ${getInputBorder(isPasswordValid, password)}`}
+          className={`w-full px-4 py-3 pl-11 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${getInputBorder(isPasswordValid, password)}`}
         />
+        <span className="absolute left-3 top-3 text-gray-400">
+          #
+        </span>
+        </div>
 
         <div className="text-xs flex flex-col gap-1">
           <span className={getColor(validations.length)}>{validations.length ? '✔' : '•'} Mínimo 8 caracteres</span>
@@ -93,13 +102,18 @@ export default function Register() {
           <span className={getColor(validations.special)}>{validations.special ? '✔' : '•'} Caractere especial</span>
         </div>
 
+        <div className="relative">
         <input
           type="password"
           placeholder="Confirmar senha"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className={`p-2 rounded border ${getInputBorder(isMatch, confirmPassword)}`}
+          className={`w-full px-4 py-3 pl-11 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition ${getInputBorder(isMatch, confirmPassword)}`}
         />
+        <span className="absolute left-3 top-3 text-gray-400">
+          #
+        </span>
+        </div>
 
         {confirmPassword && (
           <span className={`text-xs ${isMatch ? 'text-green-600' : 'text-red-500'}`}>
@@ -107,23 +121,23 @@ export default function Register() {
           </span>
         )}
 
-        <label className="flex items-start gap-2 text-sm text-gray-700">
+        <label className="flex items-start gap-2 text-sm text-gray-400">
           <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1" />
           <span>Aceito os termos de uso e a política de privacidade para fins de autenticação e uso da plataforma.</span>
         </label>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <button onClick={handleRegister} className="bg-blue-500 text-white p-2 rounded mt-2 hover:bg-blue-600">
+        <button onClick={handleRegister} className="w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-blue-400 active:scale-[0.98] transition-all shadow-lg">
           Criar conta
         </button>
 
-        <button onClick={() => navigate('/')} className="bg-green-500 text-white p-2 rounded hover:bg-green-600">
+        <button onClick={() => navigate('/')} className="w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 active:scale-[0.98] transition-all shadow-lg">
           Fazer login
         </button>
 
         {accountCreated && <p className="text-green-600 text-sm text-center">Conta criada com sucesso! Redirecionando...</p>}
       </div>
-    </div>
+    </AuthLayout>
   )
 }
