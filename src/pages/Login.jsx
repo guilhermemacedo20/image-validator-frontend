@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import AuthLayout from '../components/AuthLayout'
 
 export default function Login() {
   const { login } = useAuth()
@@ -36,39 +37,69 @@ export default function Login() {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded shadow w-80">
-        <h1 className="text-xl mb-4 font-bold text-center">Login</h1>
+    <AuthLayout title="Bem-vindo(a) de volta!" subtitle="Faça login para acessar sua conta">
 
+      {/* Email */}
+      <div className="relative">
         <input
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 mb-2 w-full"
+          className="w-full px-4 py-3 pl-11 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
         />
+        <span className="absolute left-3 top-3 text-gray-400">
+          @
+        </span>
+      </div>
 
+      {/* Senha */}
+      <div className="relative">
         <input
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full"
+          className="w-full px-4 py-3 pl-11 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
         />
+        <span className="absolute left-3 top-3 text-gray-400">
+          #
+        </span>
+      </div>
 
-        <button onClick={() => navigate('/forgot-password')} className="text-sm text-blue-500 mt-0 mb-4">
+      {/* Esqueci senha */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => navigate('/forgot-password')}
+          className="text-sm text-purple-600 hover:text-purple-500 transition"
+        >
           Esqueci minha senha
         </button>
-
-        <button onClick={handleLogin} className="bg-green-500 text-white w-full p-2 rounded">
-          Entrar
-        </button>
-
-        {error && <p className="text-red-500 text-sm my-2 text-center">{error}</p>}
-
-        <button onClick={() => navigate('/register')} className="text-blue-500 w-full p-2 mt-2">
-          Não possui conta? Cadastre-se
-        </button>
       </div>
-    </div>
+
+      {/* Botão */}
+      <button
+        onClick={handleLogin}
+        className="w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 active:scale-[0.98] transition-all shadow-lg"
+      >
+        Entrar
+      </button>
+
+      {/* Erro */}
+      {error && (
+        <p className="text-red-500 text-sm text-center">{error}</p>
+      )}
+
+      {/* Cadastro */}
+      <p className="text-sm text-center text-gray-500">
+        Não possui conta?{" "}
+        <button
+          onClick={() => navigate('/register')}
+          className="text-purple-600 font-medium hover:underline"
+        >
+          Cadastre-se
+        </button>
+      </p>
+
+    </AuthLayout>
   )
 }
