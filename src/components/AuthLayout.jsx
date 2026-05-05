@@ -9,7 +9,7 @@ export default function AuthLayout({ title, subtitle, children }){
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-20">
                         <img
                             className="w-[420px] drop-shadow-2xl"
-                            src="https://media.discordapp.net/attachments/717097301692252192/1500324731331678379/path3.png?ex=69f805ca&is=69f6b44a&hm=8cf837fbdacf79a6ada8d4f87512a9f900ba06ff456f2f809d376f40b64ddcc8&=&format=webp&quality=lossless"
+                            src="../assets/path3.png"
                             alt="logo"
                         />
                     </div>
