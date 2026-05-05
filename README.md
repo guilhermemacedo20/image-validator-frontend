@@ -150,4 +150,10 @@ O frontend consome endpoints para:
 
 ## 👨‍💻 Autor
 
-Projeto acadêmico focado em segurança, UX e conformidade com LGPD.
+Projeto acadêmico focado em segurança da informação, autenticação forte e LGPD.
+Idealizado e realizado por:
+
+- LUIZ EDUARDO DIAS
+- Guilherme Aires Pimenta de Macedo
+- FABRÍCIO ROCHA DE SOUZA
+- MARIANA DA ROCHA PEREIRA MOREIRA
