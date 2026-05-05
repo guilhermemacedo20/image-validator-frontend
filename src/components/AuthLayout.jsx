@@ -1,3 +1,5 @@
+import logo from '../assets/path3.png'
+
 export default function AuthLayout({ title, subtitle, children }){
     return (
         <div className="bg-gray-100 dark:bg-gray-950">
@@ -9,7 +11,7 @@ export default function AuthLayout({ title, subtitle, children }){
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center px-20">
                         <img
                             className="w-[420px] drop-shadow-2xl"
-                            src="../assets/path3.png"
+                            src={logo}
                             alt="logo"
                         />
                     </div>
