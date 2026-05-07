@@ -1,6 +1,7 @@
+import { useAuth } from "@/context/AuthContext"
+import { getInputBorder, getColor } from "@/utils/color"
 import { useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
 
 export default function ResetPassword() {
   const { resetPassword } = useAuth()
@@ -24,13 +25,6 @@ export default function ResetPassword() {
 
   const isPasswordValid = Object.values(validations).every(Boolean)
   const isMatch = password === confirmPassword && confirmPassword.length > 0
-
-  const getColor = (valid) => (valid ? 'text-green-600' : 'text-gray-400')
-
-  const getInputBorder = (valid, value) => {
-    if (!value) return 'border-gray-300'
-    return valid ? 'border-green-500' : 'border-red-500'
-  }
 
   const handleReset = async () => {
     try {
@@ -59,7 +53,7 @@ export default function ResetPassword() {
       setTimeout(() => {
         navigate("/")
       }, 2000)
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.error || "Token inválido ou expirado")
     }
   }

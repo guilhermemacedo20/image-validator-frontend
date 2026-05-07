@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Login from "./pages/Login"
-import TwoFactor from "./pages/TwoFactor"
-import Register from "./pages/Register"
 import ForgotPassword from "./pages/forgotPassword"
-import ResetPassword from "./pages/resetPassword"
-import PrivateRoute from "./routes/PrivateRoute"
 import ImageAnalyzer from "./pages/ImageAnalyser"
+import Login from "./pages/Login"
 import MyAccount from "./pages/MyAccount"
+import Register from "./pages/Register"
+import ResetPassword from "./pages/resetPassword"
+import TwoFactor from "./pages/TwoFactor"
+import PrivateRoute from "./routes/PrivateRoute"
 
 export default function App() {
   return (

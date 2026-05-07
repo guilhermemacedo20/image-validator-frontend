@@ -1,8 +1,8 @@
+import PageContainer from '@/components/PageContainer'
+import { useAuth } from '@/context/AuthContext'
+import { api } from '@/services/api'
 import { useEffect, useState } from 'react'
-import { useAuth } from '../context/AuthContext'
-import { api } from '../services/api'
 import { useNavigate } from 'react-router-dom'
-import PageContainer from '../components/PageContainer'
 
 export default function MyAccount() {
   const { logout, user, fetchUser } = useAuth()
@@ -27,7 +27,7 @@ export default function MyAccount() {
     setAddress(user?.address || '')
   }, [user])
 
-  const isValidPhone = (value) => /^\d{10,11}$/.test(value.replace(/\D/g, ''))
+  const isValidPhone = (value:string) => /^\d{10,11}$/.test(value.replace(/\D/g, ''))
 
   const handleSaveProfile = async () => {
     try {
@@ -50,7 +50,7 @@ export default function MyAccount() {
       setAddress(res.data.user.address)
       await fetchUser()
       setProfileMessage('✅ Dados atualizados com sucesso')
-    } catch (error) {
+    } catch (error: any) {
       setProfileMessage(error.response?.data?.error || '❌ Erro ao salvar dados')
     }
   }
@@ -61,7 +61,7 @@ export default function MyAccount() {
       setMessage('')
       const res = await api.post('/auth/2fa/setup')
       setQrCode(res.data.qrCode)
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || 'Erro ao iniciar 2FA')
     } finally {
       setLoading(false)
@@ -77,7 +77,7 @@ export default function MyAccount() {
       setQrCode(null)
       await fetchUser()
       setMessage('✅ 2FA desativado com sucesso')
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || '❌ Erro ao desativar 2FA')
     } finally {
       setLoading(false)
@@ -93,7 +93,7 @@ export default function MyAccount() {
       setQrCode(null)
       setCode('')
       setMessage('✅ 2FA ativado com sucesso')
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || '❌ Código inválido')
     } finally {
       setLoading(false)
@@ -105,7 +105,7 @@ export default function MyAccount() {
       const res = await api.get('/user/export')
       setExportedData(JSON.stringify(res.data.data, null, 2))
       setMessage('Dados exportados com sucesso')
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || '❌ Erro ao exportar dados')
     }
   }
@@ -115,7 +115,7 @@ export default function MyAccount() {
       await api.post('/user/revoke-consent')
       await fetchUser()
       setMessage('Consentimento revogado com sucesso')
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || '❌ Erro ao revogar consentimento')
     }
   }
@@ -128,7 +128,7 @@ export default function MyAccount() {
       await api.delete('/user')
       localStorage.clear()
       window.location.href = '/'
-    } catch (error) {
+    } catch (error: any) {
       setMessage(error.response?.data?.error || '❌ Erro ao excluir conta')
     }
   }

@@ -1,6 +1,6 @@
+import { useAuth } from '@/context/AuthContext'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 
 export default function TwoFactor() {
   const { login } = useAuth()
@@ -20,9 +20,9 @@ export default function TwoFactor() {
   const handleVerify = async () => {
     try {
       setError('')
-      await login(null, null, code, twoFactorToken)
+      await login('', '', code, twoFactorToken)
       navigate('/my-account')
-    } catch (err) {
+    } catch (err: any) {
       setError(err.response?.data?.error || 'Código 2FA inválido')
     }
   }
