@@ -6,7 +6,7 @@ export const environment = {
 
   backend: {
     url: isProd
-      ? 'https://image-validator-backend.onrender.com/api'
+      ? 'https://image-validator-backend-production.up.railway.app/api'
       : 'http://localhost:3000/api',
   },
 
