@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import logo from '../assets/path3.png'
+import logo from '../assets/logos/tipoW.png'
 
 interface AuthLayoutProps {
   title: string
