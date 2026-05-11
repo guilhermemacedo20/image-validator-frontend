@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext'
 import { api } from '@/services/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DashboardLayout from '../components/DashboardLayout'
 
 export default function MyAccount() {
   const { logout, user, fetchUser } = useAuth()
@@ -27,7 +28,7 @@ export default function MyAccount() {
     setAddress(user?.address || '')
   }, [user])
 
-  const isValidPhone = (value:string) => /^\d{10,11}$/.test(value.replace(/\D/g, ''))
+  const isValidPhone = (value: string) => /^\d{10,11}$/.test(value.replace(/\D/g, ''))
 
   const handleSaveProfile = async () => {
     try {
@@ -133,93 +134,349 @@ export default function MyAccount() {
     }
   }
 
-  return (
-    
-    <PageContainer title="Minha Conta">
-      <button onClick={() => navigate('/analyze-image')} className="text-blue-500 w-full p-2 my-2">
-          Analisar Imagem
-        </button>   
+  const handleAnalyze = (value: string) => {
 
-        <div className="flex gap-2 mb-6">
-          <button onClick={() => setTab('profile')} className={`flex-1 p-2 rounded ${tab === 'profile' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
-            Dados
+    setTab(value);
+
+    if (value === "analyze") {
+      navigate("/analyze-image");
+    }
+  };
+
+  const sidebarItems = [
+     {
+      id: "analyze",
+      title: "Análise de Imagem",
+      subtitle: "Detector de IA",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9.75 17L15 12l-5.25-5"
+          />
+        </svg>
+      )
+    },
+    {
+      id: 'profile',
+      title: 'Dados da Conta',
+      subtitle: 'Informações pessoais',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      )
+    },
+
+    {
+      id: 'security',
+      title: 'Segurança',
+      subtitle: 'Autenticação e proteção',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5 relative left-px"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 11c0 .552-.448 1-1 1s-1-.448-1-1 .448-1 1-1 1 .448 1 1zm0 0v2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      )
+    },
+
+    {
+      id: 'privacy',
+      title: 'Privacidade',
+      subtitle: 'Dados e consentimento',
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5 relative left-px"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 12l2 2 4-4m5-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      )
+    }
+  ]
+
+ return (
+    <DashboardLayout
+      user={user}
+      firstName={firstName}
+      currentTab={tab}
+      onTabChange={handleAnalyze}
+      onAnalyze={() => navigate('/analyze-image')}
+      onLogout={logout}
+      sidebarItems={sidebarItems}
+    >
+
+      {/* PROFILE */}
+      {tab === 'profile' && (
+        <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl p-8">
+
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              Dados da Conta
+            </h2>
+
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
+              Atualize suas informações pessoais
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5">
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium">
+                Nome
+              </label>
+
+              <input
+                placeholder="Nome"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium">
+                Sobrenome
+              </label>
+
+              <input
+                placeholder="Sobrenome"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium">
+                Telefone
+              </label>
+
+              <input
+                placeholder="Telefone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-medium">
+                Endereço
+              </label>
+
+              <input
+                placeholder="Endereço"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
+
+          </div>
+
+          <div className="mt-6 p-4 rounded-2xl bg-gray-100 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Consentimento:{' '}
+              <span className="font-semibold text-purple-600 dark:text-purple-400">
+                {user?.consent ? 'ativo' : 'revogado'}
+              </span>
+
+              {user?.consentDate
+                ? ` • ${new Date(user.consentDate).toLocaleString('pt-BR')}`
+                : ''}
+            </p>
+          </div>
+
+          {profileMessage && (
+            <p className="mt-4 text-sm font-medium">
+              {profileMessage}
+            </p>
+          )}
+
+          <button
+            onClick={handleSaveProfile}
+            className="mt-6 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-900/30 transition-all text-white px-6 py-3 rounded-2xl font-medium"
+          >
+            Salvar Dados
           </button>
-          <button onClick={() => setTab('security')} className={`flex-1 p-2 rounded ${tab === 'security' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
-            Segurança
-          </button>
-          <button onClick={() => setTab('privacy')} className={`flex-1 p-2 rounded ${tab === 'privacy' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}>
-            Privacidade
-          </button>
+
         </div>
+      )}
 
-        {tab === 'profile' && (
-          <div className="flex flex-col gap-3">
-            <input placeholder="Nome" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="border p-2 rounded" />
-            <input placeholder="Sobrenome" value={lastName} onChange={(e) => setLastName(e.target.value)} className="border p-2 rounded" />
-            <input placeholder="Telefone" value={phone} onChange={(e) => setPhone(e.target.value)} className="border p-2 rounded" />
-            <input placeholder="Endereço" value={address} onChange={(e) => setAddress(e.target.value)} className="border p-2 rounded" />
-            <p className="text-sm text-gray-600">Consentimento: {user?.consent ? 'ativo' : 'revogado'} {user?.consentDate ? `• ${new Date(user.consentDate).toLocaleString('pt-BR')}` : ''}</p>
+      {/* SECURITY */}
+      {tab === 'security' && (
+        <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl p-8">
 
-            {profileMessage && <p className="text-sm">{profileMessage}</p>}
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold">
+              Segurança
+            </h2>
 
-            <button onClick={handleSaveProfile} className="bg-blue-500 text-white p-2 rounded">
-              Salvar dados
-            </button>
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
+              Gerencie sua autenticação
+            </p>
           </div>
-        )}
 
-        {tab === 'security' && (
-          <div>
-            {user?.twoFactorEnabled ? (
-              <div className="flex flex-col gap-3">
-                <p className="text-green-600 font-medium">✅ 2FA já está ativado</p>
-                <button onClick={handleDisable2FA} className="text-red-500 p-2">
-                  Desativar 2FA
-                </button>
+          {user?.twoFactorEnabled ? (
+            <div className="flex flex-col gap-4">
+
+              <div className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20">
+                <p className="text-green-600 font-semibold">
+                  ✅ 2FA já está ativado
+                </p>
               </div>
-            ) : !qrCode ? (
-              <button onClick={handleSetup2FA} className="bg-blue-500 text-white px-4 py-2 rounded">
-                Ativar 2FA
+
+              <button
+                onClick={handleDisable2FA}
+                className="bg-red-500 hover:bg-red-600 transition-colors text-white px-5 py-3 rounded-2xl w-fit"
+              >
+                Desativar 2FA
               </button>
-            ) : (
-              <div className="flex flex-col gap-3">
-                <p>Escaneie o QR Code:</p>
-                <img src={qrCode} alt="QR Code" className="w-40" />
-                <input placeholder="Digite o código" value={code} onChange={(e) => setCode(e.target.value)} className="border p-2 rounded" />
-                <button onClick={handleConfirm2FA} className="bg-green-500 text-white p-2 rounded">
-                  Confirmar
-                </button>
+
+            </div>
+          ) : !qrCode ? (
+            <button
+              onClick={handleSetup2FA}
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] transition-all text-white px-5 py-3 rounded-2xl w-fit"
+            >
+              Ativar 2FA
+            </button>
+          ) : (
+            <div className="flex flex-col gap-5">
+
+              <div>
+                <p className="font-medium mb-4">
+                  Escaneie o QR Code:
+                </p>
+
+                <div className="w-fit p-5 rounded-3xl bg-white shadow-xl">
+                  <img
+                    src={qrCode}
+                    alt="QR Code"
+                    className="w-48"
+                  />
+                </div>
               </div>
-            )}
 
-            {message && <p className="mt-3 text-sm font-medium">{message}</p>}
-            {loading && <p className="text-sm text-gray-500 mt-2">Processando...</p>}
+              <input
+                placeholder="Digite o código"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="max-w-sm bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+
+              <button
+                onClick={handleConfirm2FA}
+                className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] transition-all text-white px-5 py-3 rounded-2xl w-fit"
+              >
+                Confirmar
+              </button>
+
+            </div>
+          )}
+
+          {message && (
+            <p className="mt-5 text-sm font-medium">
+              {message}
+            </p>
+          )}
+
+          {loading && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+              Processando...
+            </p>
+          )}
+
+        </div>
+      )}
+
+      {/* PRIVACY */}
+      {tab === 'privacy' && (
+        <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl p-8">
+
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold">
+              Privacidade
+            </h2>
+
+            <p className="text-gray-500 dark:text-gray-400 mt-2">
+              Controle seus dados e permissões
+            </p>
           </div>
-        )}
 
-        {tab === 'privacy' && (
-          <div className="flex flex-col gap-3">
-            <button onClick={handleExportData} className="bg-indigo-500 text-white p-2 rounded">
+          <div className="flex flex-col gap-4">
+
+            <button
+              onClick={handleExportData}
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:scale-[1.01] transition-all text-white p-4 rounded-2xl text-left"
+            >
               Exportar meus dados
             </button>
-            <button onClick={handleRevokeConsent} className="bg-yellow-500 text-white p-2 rounded">
+
+            <button
+              onClick={handleRevokeConsent}
+              className="bg-yellow-500 hover:bg-yellow-600 transition-colors text-white p-4 rounded-2xl text-left"
+            >
               Revogar consentimento
             </button>
-            <button onClick={handleDeleteAccount} className="bg-red-600 text-white p-2 rounded">
+
+            <button
+              onClick={handleDeleteAccount}
+              className="bg-red-600 hover:bg-red-700 transition-colors text-white p-4 rounded-2xl text-left"
+            >
               Excluir minha conta
             </button>
 
             {exportedData && (
-              <pre className="bg-gray-100 p-3 rounded text-xs overflow-auto max-h-72">{exportedData}</pre>
+              <pre className="bg-gray-100 dark:bg-gray-800/70 border border-gray-200 dark:border-gray-700 p-5 rounded-2xl text-xs overflow-auto max-h-96">
+                {exportedData}
+              </pre>
             )}
+
           </div>
-        )}
 
-        
+        </div>
+      )}
 
-        <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded mt-6 w-full">
-          Logout
-        </button>
-      </PageContainer>
+    </DashboardLayout>
   )
 }
