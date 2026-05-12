@@ -212,7 +212,7 @@ export default function ImageAnalyzer() {
 
                     {typedResult.isAIGenerated
                       ? "IA 🤖"
-                      : "Humano 📸"}
+                      : "Real 📸"}
 
                   </h2>
 
