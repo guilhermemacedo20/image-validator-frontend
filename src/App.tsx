@@ -8,6 +8,8 @@ import ResetPassword from "./pages/resetPassword"
 import TwoFactor from "./pages/TwoFactor"
 import PrivateRoute from "./routes/PrivateRoute"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
+import RetentionPolicy from "./pages/RetentionPolicy"
+import SecurityPolicy from "./pages/SecurityPolicy"
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/analyze-image" element={<PrivateRoute><ImageAnalyzer /></PrivateRoute>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/politica-de-retencao" element={<RetentionPolicy />} />
+        <Route path="/politica-de-seguranca" element={<SecurityPolicy />} />
 
         <Route
           path="/my-account"
