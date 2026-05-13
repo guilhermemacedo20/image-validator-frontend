@@ -12,8 +12,6 @@ export default function MyAccount() {
   const [tab, setTab] = useState('profile')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
   const [profileMessage, setProfileMessage] = useState('')
   const [qrCode, setQrCode] = useState(null)
   const [code, setCode] = useState('')
@@ -24,31 +22,20 @@ export default function MyAccount() {
   useEffect(() => {
     setFirstName(user?.firstName || '')
     setLastName(user?.lastName || '')
-    setPhone(user?.phone || '')
-    setAddress(user?.address || '')
   }, [user])
-
-  const isValidPhone = (value: string) => /^\d{10,11}$/.test(value.replace(/\D/g, ''))
 
   const handleSaveProfile = async () => {
     try {
       setProfileMessage('')
 
-      if (!firstName || !lastName || !phone || !address) {
+      if (!firstName || !lastName) {
         setProfileMessage('Preencha todos os campos')
         return
       }
 
-      if (!isValidPhone(phone)) {
-        setProfileMessage('Telefone inválido')
-        return
-      }
-
-      const res = await api.put('/user/profile', { firstName, lastName, phone, address })
+      const res = await api.put('/user/profile', { firstName, lastName })
       setFirstName(res.data.user.firstName)
       setLastName(res.data.user.lastName)
-      setPhone(res.data.user.phone)
-      setAddress(res.data.user.address)
       await fetchUser()
       setProfileMessage('✅ Dados atualizados com sucesso')
     } catch (error: any) {
@@ -281,32 +268,6 @@ export default function MyAccount() {
                 placeholder="Sobrenome"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium">
-                Telefone
-              </label>
-
-              <input
-                placeholder="Telefone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium">
-                Endereço
-              </label>
-
-              <input
-                placeholder="Endereço"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
                 className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
               />
             </div>

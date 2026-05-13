@@ -20,7 +20,7 @@ export function useAnalyzeImage() {
 
   const abortRef = useRef<AbortController | null>(null);
 
-  const analyze = async (file: File): Promise<void> => {
+  const analyze = async (file: File, geminiApiKey: string): Promise<void> => {
     if (!file || loading) {
       return;
     }
@@ -40,7 +40,7 @@ export function useAnalyzeImage() {
 
       abortRef.current = controller;
 
-      const res = await analyzeImage(file, controller.signal);
+      const res = await analyzeImage(file, controller.signal, geminiApiKey);
 
       setResult(res.data);
     } catch (err) {

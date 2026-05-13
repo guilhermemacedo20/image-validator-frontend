@@ -10,6 +10,8 @@ export default function ImageAnalyzer() {
 
   const [preview, setPreview] = useState<string | null>(null);
 
+  const [geminiApiKey, setGeminiApiKey] = useState("");
+
   const [tab, setTab] = useState("analyze");
 
   const navigate = useNavigate();
@@ -99,7 +101,18 @@ export default function ImageAnalyzer() {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Análise de Imagem
           </h1>
+          <div className="flex flex-col gap-2 mt-4">
+              <label className="text-sm font-medium">
+                Insira a chave de API do Gemini
+              </label>
 
+              <input
+                placeholder="Chave de API do Gemini"
+                value={geminiApiKey}
+                onChange={(e) => setGeminiApiKey(e.target.value)}
+                className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
           <p className="text-gray-500 dark:text-gray-400 mt-2">
             Faça upload de uma imagem para detectar conteúdo gerado por IA
           </p>
@@ -182,8 +195,8 @@ export default function ImageAnalyzer() {
 
           {/* BUTTON */}
           <button
-            onClick={() => file && analyze(file)}
-            disabled={!file || loading}
+            onClick={() => file && geminiApiKey && analyze(file, geminiApiKey)}
+            disabled={!file || loading || !geminiApiKey}
             className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-[1.01] hover:shadow-xl hover:shadow-purple-900/30 disabled:opacity-50 disabled:hover:scale-100 transition-all text-white px-6 py-4 rounded-2xl font-semibold"
           >
             {loading ? "Analisando..." : "Analisar imagem"}

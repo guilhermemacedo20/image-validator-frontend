@@ -10,6 +10,7 @@ interface AnalyzeImageResponse {
 export async function analyzeImage(
   file: File,
   signal?: AbortSignal,
+  geminiApiKey?: string
 ): Promise<AnalyzeImageResponse> {
   const formData = new FormData();
 
@@ -17,6 +18,9 @@ export async function analyzeImage(
 
   const response = await api.post("/ai/analyze-image", formData, {
     signal,
+    headers: {
+      "X-Gemini-API-Key": geminiApiKey,
+    },
   });
 
   return response.data;
