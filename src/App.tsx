@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/analyze-image" element={<PrivateRoute><ImageAnalyzer /></PrivateRoute>} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         <Route path="/politica-de-retencao" element={<RetentionPolicy />} />
         <Route path="/politica-de-seguranca" element={<SecurityPolicy />} />
 

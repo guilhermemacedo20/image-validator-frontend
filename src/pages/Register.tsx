@@ -134,9 +134,9 @@ export default function Register() {
           />
           <span>
             Aceito os termos de uso, {" "}
-            a <a href="/politica-de-privacidade" target="_blank" className="text-purple-600 hover:underline">política de privacidade</a>,{" "}
-            a <a href="/politica-de-retencao" target="_blank" className="text-purple-600 hover:underline">política de retenção</a>{" "}
-            e a <a href="/politica-de-seguranca" target="_blank" className="text-purple-600 hover:underline">política de segurança</a>.
+            a <a href="/politica-de-privacidade" className="text-purple-600 hover:underline">política de privacidade</a>,{" "}
+            a <a href="/politica-de-retencao" className="text-purple-600 hover:underline">política de retenção</a>{" "}
+            e a <a href="/politica-de-seguranca" className="text-purple-600 hover:underline">política de segurança</a>.
             para fins de autenticação e uso da plataforma.
           </span>
         </label>

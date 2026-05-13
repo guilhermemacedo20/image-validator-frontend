@@ -17,7 +17,7 @@ export default function RetentionPolicy() {
       <header className="h-16 border-b border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl sticky top-0 z-50">
         <div className="h-full px-6 flex items-center justify-between max-w-4xl mx-auto">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/register')}
             className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
