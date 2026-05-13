@@ -7,6 +7,7 @@ import Register from "./pages/Register"
 import ResetPassword from "./pages/resetPassword"
 import TwoFactor from "./pages/TwoFactor"
 import PrivateRoute from "./routes/PrivateRoute"
+import PrivacyPolicy from "./pages/PrivacyPolicy"
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/analyze-image" element={<PrivateRoute><ImageAnalyzer /></PrivateRoute>} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         <Route
           path="/my-account"

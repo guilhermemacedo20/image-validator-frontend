@@ -133,8 +133,11 @@ export default function Register() {
             className="mt-1"
           />
           <span>
-            Aceito os termos de uso e a política de privacidade para fins de
-            autenticação e uso da plataforma.
+            Aceito os termos de uso e a{" "}
+            <a href="/privacy-policy" className="text-blue-500 hover:underline">
+              política de privacidade
+            </a>{" "}
+            para fins de autenticação e uso da plataforma.
           </span>
         </label>
 
