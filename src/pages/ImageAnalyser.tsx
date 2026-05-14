@@ -109,6 +109,7 @@ export default function ImageAnalyzer() {
               <input
                 placeholder="Chave de API do Gemini"
                 value={geminiApiKey}
+                type="password"
                 onChange={(e) => setGeminiApiKey(e.target.value)}
                 className="bg-gray-100 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-purple-500 transition-all"
               />
@@ -234,11 +235,23 @@ export default function ImageAnalyzer() {
                 <div className="px-5 py-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg">
 
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Confiança
+                    Score IA
                   </p>
 
                   <p className="text-xl font-bold text-purple-600 dark:text-purple-400">
-                    {typedResult.score}%
+                    {typedResult.scoreIa}%
+                  </p>
+
+                </div>
+
+                <div className="px-5 py-3 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg">
+
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Score Real
+                  </p>
+
+                  <p className="text-xl font-bold text-purple-600 dark:text-purple-400">
+                    {typedResult.scoreReal}%
                   </p>
 
                 </div>

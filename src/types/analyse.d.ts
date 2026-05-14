@@ -1,5 +1,6 @@
 interface AnalyzeResult {
   isAIGenerated?: boolean;
-  score?: number;
+  scoreIa?: number;
+  scoreReal?:number;
   reasons?: string[];
 }
