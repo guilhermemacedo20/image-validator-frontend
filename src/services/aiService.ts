@@ -1,3 +1,4 @@
+import { fileToBase64 } from "@/utils/base64";
 import { api } from "./api";
 
 interface AnalyzeImageResponse {
@@ -14,7 +15,7 @@ export async function analyzeImage(
 ): Promise<AnalyzeImageResponse> {
   const formData = new FormData();
 
-  formData.append("image", file);
+  formData.append("image", await fileToBase64(file));
 
   const response = await api.post("/ai/analyze-image", formData, {
     signal,
