@@ -1,4 +1,15 @@
-const isProd = import.meta.env.PROD
+const hostname = window.location.hostname
+
+const isVercel =
+  hostname.includes('vercel.app') ||
+  hostname.includes('.vercel')
+
+const isLocal =
+  hostname === 'localhost' ||
+  hostname === '127.0.0.1'
+
+const isProd =
+  import.meta.env.PROD || isVercel || !isLocal
 
 export const environment = {
   production: isProd,
