@@ -41,8 +41,8 @@ export function useAnalyzeImage() {
       abortRef.current = controller;
 
       const res = await analyzeImage(file, controller.signal, geminiApiKey);
-
-      setResult(res.data);
+      
+      setResult(res);
     } catch (err) {
       if (axios.isCancel(err)) {
         return;
