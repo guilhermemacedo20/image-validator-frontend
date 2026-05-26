@@ -21,7 +21,7 @@ export default function Login() {
         return
       }
 
-      navigate('/my-account')
+      navigate('/analyze-image')
     } catch (err: any) {
       const message = err.response?.data?.error
       if (message === 'Credenciais inválidas') {
