@@ -21,7 +21,7 @@ export default function TwoFactor() {
     try {
       setError('')
       await login('', '', code, twoFactorToken)
-      navigate('/my-account')
+      navigate('/analyze-image')
     } catch (err: any) {
       setError(err.response?.data?.error || 'Código 2FA inválido')
     }
