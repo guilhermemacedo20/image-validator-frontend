@@ -1,7 +1,7 @@
+import AuthLayout from '@/components/AuthLayout'
+import { useAuth } from '@/context/AuthContext'
 import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import AuthLayout from '../components/AuthLayout'
 
 export default function Login() {
   const { login } = useAuth()
@@ -21,8 +21,8 @@ export default function Login() {
         return
       }
 
-      navigate('/my-account')
-    } catch (err) {
+      navigate('/analyze-image')
+    } catch (err: any) {
       const message = err.response?.data?.error
       if (message === 'Credenciais inválidas') {
         setError('Usuário ou senha inválidos')
