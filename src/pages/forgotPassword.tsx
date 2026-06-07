@@ -1,6 +1,6 @@
+import AuthLayout from "@/components/AuthLayout"
+import { useAuth } from "@/context/AuthContext"
 import { useState } from "react"
-import { useAuth } from "../context/AuthContext"
-import AuthLayout from "../components/AuthLayout"
 
 export default function ForgotPassword() {
   const { forgotPassword } = useAuth()
