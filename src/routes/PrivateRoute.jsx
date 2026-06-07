@@ -1,12 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { ReactNode } from 'react'
 
-interface PrivateRouteProps {
-  children: ReactNode
-}
-
-export default function PrivateRoute({ children }: PrivateRouteProps) {
+export default function PrivateRoute({ children }) {
   const { user, loading } = useAuth()
 
   if (loading) {
