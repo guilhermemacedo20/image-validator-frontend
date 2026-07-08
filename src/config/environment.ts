@@ -1,20 +1,17 @@
 const hostname = window.location.hostname;
 
-const isVercel =
-  hostname.includes("vercel.app") || hostname.includes(".vercel");
-
 const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
 
-const isProd = import.meta.env.PROD || isVercel || !isLocal;
+const backendUrl =
+  import.meta.env.VITE_BACKEND_URL ||
+  (isLocal ? "http://localhost:3000/api" : "");
 
 export const environment = {
-  production: isProd,
-  name: isProd ? "production" : "local",
+  production: import.meta.env.PROD,
+  name: isLocal ? "local" : "production",
 
   backend: {
-    url: isProd
-      ? "https://image-validator-backend-production.up.railway.app/api"
-      : "http://localhost:3000/api",
+    url: backendUrl,
   },
 
   recaptcha: {
