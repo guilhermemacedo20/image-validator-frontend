@@ -1,5 +1,5 @@
-import { useAuth } from "@/context/AuthContext"
-import { getInputBorder, getColor } from "@/utils/color"
+import { useAuth } from "@/presentation/context/AuthContext"
+import { getColor, getInputBorder } from "@/infrastructure/utils/color"
 import { useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 

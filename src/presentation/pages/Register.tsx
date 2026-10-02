@@ -1,6 +1,6 @@
-import AuthLayout from "@/components/AuthLayout";
-import { useAuth } from "@/context/AuthContext";
-import { getInputBorder, getColor } from "@/utils/color";
+import { useAuth } from "@/presentation/context/AuthContext";
+import AuthLayout from "@/presentation/components/AuthLayout";
+import { getColor, getInputBorder } from "@/infrastructure/utils/color";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 

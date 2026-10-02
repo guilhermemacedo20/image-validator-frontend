@@ -1,5 +1,5 @@
-import AuthLayout from '@/components/AuthLayout'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/presentation/context/AuthContext'
+import AuthLayout from '@/presentation/components/AuthLayout'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 

@@ -1,157 +1,68 @@
-# 🎨 Secure Image Validator — Frontend
+# Secure Image Validator — Frontend
 
-## 📌 Visão Geral
+Interface web em React para autenticação segura e análise de imagens com IA (PFC de Engenharia de Software).
 
-Interface web desenvolvida em React para interação com a API segura de autenticação e análise de imagens.
+Arquitetura: **Layered Architecture** — detalhes em [`ARCHITECTURE.md`](./ARCHITECTURE.md).
 
-O frontend permite ao usuário realizar login seguro, configurar 2FA, gerenciar dados pessoais e analisar imagens utilizando inteligência artificial.
+## Objetivo
 
----
+Fornecer uma interface simples e segura para:
 
-## 🧠 Objetivo
+- autenticação de usuários (JWT + 2FA);
+- gerenciamento de conta e direitos LGPD;
+- upload e análise de imagens via backend.
 
-Fornecer uma interface moderna e segura para:
+## Tecnologias
 
-* Autenticação de usuários
-* Gerenciamento de conta
-* Envio de imagens para análise
-* Controle de dados conforme LGPD
+- React 19 + TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- Axios
+- Context API (somente autenticação)
+- Vitest + Testing Library
 
----
-
-## 🚀 Tecnologias Utilizadas
-
-* React
-* Vite
-* Tailwind CSS
-* Context API
-
----
-
-## 🎯 Funcionalidades
-
-* Cadastro com consentimento LGPD
-* Login com JWT
-* Autenticação com 2FA
-* Recuperação de senha
-* Dashboard do usuário
-* Upload e análise de imagem com IA
-* Exportação de dados
-* Revogação de consentimento
-* Exclusão de conta
-
----
-
-## 🔐 Segurança
-
-* Interceptor Axios com refresh token
-* Proteção de rotas autenticadas
-* Tokens controlados pelo backend
-* Integração com API segura
-
----
-
-## 📂 Estrutura do Projeto
+## Arquitetura em camadas
 
 ```
 src/
- ├── components/
- ├── pages/
- ├── hooks/
- ├── services/
- ├── context/
- ├── routes/
- └── config/
+├── app/               # Composição (bootstrap + rotas)
+├── presentation/      # UI: pages, components, context, hooks
+├── domain/            # Tipos e contratos do domínio
+├── infrastructure/    # HTTP, services, config, utils
+└── assets/            # Logos e estáticos
 ```
 
----
+## Funcionalidades
 
-## ⚙️ Configuração
+- Cadastro com consentimento LGPD
+- Login com JWT e 2FA
+- Recuperação de senha
+- Upload e análise de imagem com IA
+- Exportação de dados, revogação de consentimento e exclusão de conta
 
-Arquivo:
+## Configuração
 
-```
-src/config/environment.js
-```
+Arquivo: `src/infrastructure/config/environment.ts`
 
-Exemplo:
-
-```js
-export const environment = {
-  backend: {
-    url: "http://localhost:3000"
-  }
-}
+```env
+VITE_BACKEND_URL=http://localhost:3000/api
 ```
 
----
+Sem a variável, em `localhost` o default é `http://localhost:3000/api`.
 
-## ▶️ Como Rodar o Frontend
+## Como rodar
 
-### 1. Instalar dependências
-
-```
+```bash
 npm install
-```
-
-### 2. Rodar aplicação
-
-```
 npm run dev
 ```
 
-Aplicação disponível em:
+Aplicação em `http://localhost:5173`.
 
-```
-http://localhost:5173
-```
+Scripts: `npm run build`, `npm run test`, `npm run lint`.
 
----
-
-## 🔗 Integração com Backend
-
-O frontend consome endpoints para:
-
-* Autenticação
-* 2FA
-* Reset de senha
-* Dados do usuário
-* Análise de imagem
-
----
-
-## 🔄 Fluxo de Autenticação
-
-1. Usuário faz login
-2. Backend valida credenciais
-3. Se ativo, solicita 2FA
-4. Recebe tokens JWT
-5. Tokens armazenados
-6. Axios renova automaticamente
-
----
-
-## 🎨 Interface
-
-* Tema claro/escuro
-* Layout responsivo
-* Feedback visual
-* UX focado em segurança
-
----
-
-## ⚠️ Observações
-
-* Backend deve estar rodando
-* Configurar URL corretamente
-* Não expor tokens
-
----
-
-## 👨‍💻 Autor
-
-Projeto acadêmico focado em segurança da informação, autenticação forte e LGPD.
-Idealizado e realizado por:
+## Autores
 
 - LUIZ EDUARDO DIAS
 - Guilherme Aires Pimenta de Macedo

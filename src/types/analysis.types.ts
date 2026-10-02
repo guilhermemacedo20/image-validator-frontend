@@ -1,6 +1,6 @@
-interface AnalyzeResult {
+export interface AnalyzeResult {
   isAIGenerated?: boolean;
   scoreIa?: number;
-  scoreReal?:number;
+  scoreReal?: number;
   reasons?: string[];
 }

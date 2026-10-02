@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import DashboardLayout from "@/components/DashboardLayout";
-import { useAnalyzeImage } from "@/hooks/analyse";
+import { useAnalyzeImage } from "@/presentation/hooks/useAnalyzeImage/useAnalyzeImage";
+import DashboardLayout from "@/presentation/components/DashboardLayout";
 
 export default function ImageAnalyzer() {
 
@@ -17,8 +17,6 @@ export default function ImageAnalyzer() {
   const navigate = useNavigate();
 
   const { analyze, loading, result, error } = useAnalyzeImage();
-
-  const typedResult = result as AnalyzeResult | null;
 
   const handleFile = (e: ChangeEvent<HTMLInputElement>): void => {
 
@@ -211,7 +209,7 @@ export default function ImageAnalyzer() {
           )}
 
           {/* RESULT */}
-          {typedResult && (
+          {result && (
             <div className="bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-3xl p-6">
 
               <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
@@ -224,7 +222,7 @@ export default function ImageAnalyzer() {
 
                   <h2 className="text-2xl font-bold mt-1 text-gray-900 dark:text-white">
 
-                    {typedResult.isAIGenerated
+                    {result.isAIGenerated
                       ? "IA 🤖"
                       : "Real 📸"}
 
@@ -239,7 +237,7 @@ export default function ImageAnalyzer() {
                   </p>
 
                   <p className="text-xl font-bold text-purple-600 dark:text-purple-400">
-                    {typedResult.scoreIa}%
+                    {result.scoreIa}%
                   </p>
 
                 </div>
@@ -251,7 +249,7 @@ export default function ImageAnalyzer() {
                   </p>
 
                   <p className="text-xl font-bold text-purple-600 dark:text-purple-400">
-                    {typedResult.scoreReal}%
+                    {result.scoreReal}%
                   </p>
 
                 </div>
@@ -259,7 +257,7 @@ export default function ImageAnalyzer() {
               </div>
 
               {/* REASONS */}
-              {typedResult.reasons?.length ? (
+              {result.reasons?.length ? (
                 <div>
 
                   <p className="font-semibold mb-3 text-gray-800 dark:text-white">
@@ -268,7 +266,7 @@ export default function ImageAnalyzer() {
 
                   <div className="flex flex-col gap-3">
 
-                    {typedResult.reasons.map((reason, index) => (
+                    {result.reasons.map((reason, index) => (
                       <div
                         key={index}
                         className="flex items-start gap-3 bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700 rounded-2xl p-4"

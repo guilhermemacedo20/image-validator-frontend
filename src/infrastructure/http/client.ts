@@ -1,5 +1,5 @@
 import axios from "axios";
-import { environment } from "../config/environment";
+import { environment } from "@/infrastructure/config/environment";
 
 export const api = axios.create({
   baseURL: environment.backend.url,
@@ -22,7 +22,6 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config || {};
     const refreshToken = localStorage.getItem("refreshToken");
-
     const url = originalRequest.url || "";
 
     const shouldSkipRefresh = [
@@ -53,7 +52,6 @@ api.interceptors.response.use(
         localStorage.setItem("refreshToken", newRefreshToken);
 
         originalRequest.headers = originalRequest.headers || {};
-
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return api(originalRequest);

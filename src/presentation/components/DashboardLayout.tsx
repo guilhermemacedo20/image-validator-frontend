@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-import logoP from '../assets/logos/logoP.png'
-import logoW from '../assets/logos/logoW.png'
+import logoP from '@/assets/logos/logoP.png'
+import logoW from '@/assets/logos/logoW.png'
 
 interface SidebarItem {
   id: string

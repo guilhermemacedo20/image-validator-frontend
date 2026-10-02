@@ -1,23 +1,17 @@
 import axios, { AxiosError } from "axios";
 import { useRef, useState } from "react";
 
-import { analyzeImage } from "@/services/aiService";
-
-interface AnalyzeResult {
-  [key: string]: any;
-}
+import { analyzeImage } from "@/infrastructure/services/aiService";
+import type { AnalyzeResult } from "@/types/analysis.types";
 
 interface ApiErrorResponse {
   error?: string;
 }
 
 export function useAnalyzeImage() {
-  const [loading, setLoading] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
-
   const [error, setError] = useState<string | null>(null);
-
   const abortRef = useRef<AbortController | null>(null);
 
   const analyze = async (file: File, geminiApiKey: string): Promise<void> => {
@@ -27,9 +21,7 @@ export function useAnalyzeImage() {
 
     try {
       setLoading(true);
-
       setError(null);
-
       setResult(null);
 
       if (abortRef.current) {
@@ -37,34 +29,30 @@ export function useAnalyzeImage() {
       }
 
       const controller = new AbortController();
-
       abortRef.current = controller;
 
       const res = await analyzeImage(file, controller.signal, geminiApiKey);
-      
       setResult(res);
     } catch (err) {
       if (axios.isCancel(err)) {
         return;
       }
 
-      const error = err as AxiosError<ApiErrorResponse>;
+      const axiosError = err as AxiosError<ApiErrorResponse>;
 
-      if (error.response?.status === 429) {
+      if (axiosError.response?.status === 429) {
         setError("Limite de análises atingido. Aguarde.");
-
         return;
       }
 
-      if (error.response?.status === 401) {
+      if (axiosError.response?.status === 401) {
         setError("Sessão expirada. Faça login novamente.");
-
         return;
       }
 
       setError(
-        error.response?.data?.error ||
-          error.message ||
+        axiosError.response?.data?.error ||
+          axiosError.message ||
           "Erro ao analisar imagem",
       );
     } finally {
@@ -74,9 +62,7 @@ export function useAnalyzeImage() {
 
   const reset = (): void => {
     setResult(null);
-
     setError(null);
-
     setLoading(false);
   };
 

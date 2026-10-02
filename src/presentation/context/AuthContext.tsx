@@ -1,26 +1,34 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import { api } from "@/services/api";
+import {
+  clearSession,
+  fetchCurrentUser,
+  forgotPasswordRequest,
+  loginRequest,
+  logoutRequest,
+  persistTokens,
+  registerRequest,
+  resetPasswordRequest,
+} from "@/infrastructure/services/authService";
+import type {
+  AuthContextData,
+  AuthProviderProps,
+  LoginResponse,
+  User,
+} from "@/types/auth.types";
 
 const AuthContext = createContext<AuthContextData | null>(null);
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-
   const [loading, setLoading] = useState(true);
 
-  const completeLogin = async (payload: LoginPayload) => {
-    localStorage.setItem("accessToken", payload.accessToken);
-
-    localStorage.setItem("refreshToken", payload.refreshToken);
-
+  const completeLogin = async (payload: {
+    accessToken: string;
+    refreshToken: string;
+  }) => {
+    persistTokens(payload);
     await fetchUser();
-
     return { success: true };
   };
 
@@ -30,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     twoFactorCode: string | null = null,
     twoFactorToken: string | null = null,
   ): Promise<LoginResponse> => {
-    const body: Record<string, any> = {};
+    const body: Record<string, unknown> = {};
 
     if (twoFactorToken) {
       body.twoFactorToken = twoFactorToken;
@@ -44,7 +52,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }
 
-    const res = await api.post("/auth/login", body);
+    const res = await loginRequest(body);
 
     if (res.data.requiresTwoFactor) {
       return {
@@ -61,38 +69,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
     password: string,
     consent: boolean,
   ) => {
-    return api.post("/auth/register", {
-      email,
-      password,
-      consent,
-    });
+    return registerRequest(email, password, consent);
   };
 
   const logout = async (): Promise<void> => {
     const refreshToken = localStorage.getItem("refreshToken");
 
     try {
-      await api.post("/auth/logout", {
-        refreshToken,
-      });
-    } catch {}
+      await logoutRequest(refreshToken);
+    } catch {
+      /* sessão local limpa mesmo se o backend falhar */
+    }
 
-    localStorage.clear();
-
+    clearSession();
     setUser(null);
-
     window.location.href = "/";
   };
 
   const forgotPassword = async (email: string) => {
-    return api.post("/auth/forgot-password", { email });
+    return forgotPasswordRequest(email);
   };
 
   const resetPassword = async (token: string, newPassword: string) => {
-    return api.post("/auth/reset-password", {
-      token,
-      newPassword,
-    });
+    return resetPasswordRequest(token, newPassword);
   };
 
   const fetchUser = async (): Promise<void> => {
@@ -102,17 +101,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (!token) {
         setUser(null);
         setLoading(false);
-
         return;
       }
 
-      const res = await api.get("/auth/me");
-
-      setUser(res.data.user);
+      const currentUser = await fetchCurrentUser();
+      setUser(currentUser);
     } catch {
       setUser(null);
-
-      localStorage.clear();
+      clearSession();
     } finally {
       setLoading(false);
     }

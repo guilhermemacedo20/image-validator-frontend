@@ -1,15 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import ForgotPassword from "./pages/forgotPassword"
-import ImageAnalyzer from "./pages/ImageAnalyser"
-import Login from "./pages/Login"
-import MyAccount from "./pages/MyAccount"
-import Register from "./pages/Register"
-import ResetPassword from "./pages/resetPassword"
-import TwoFactor from "./pages/TwoFactor"
-import PrivateRoute from "./routes/PrivateRoute"
-import PrivacyPolicy from "./pages/PrivacyPolicy"
-import RetentionPolicy from "./pages/RetentionPolicy"
-import SecurityPolicy from "./pages/SecurityPolicy"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import PrivateRoute from "@/routes/PrivateRoute";
+import MyAccount from "@/presentation/pages/MyAccount";
+import ImageAnalyzer from "@/presentation/pages/ImageAnalyser";
+import ForgotPassword from "@/presentation/pages/ForgotPassword";
+import Login from "@/presentation/pages/Login";
+import Register from "@/presentation/pages/Register";
+import ResetPassword from "@/presentation/pages/ResetPassword";
+import TwoFactor from "@/presentation/pages/TwoFactor";
+import PrivacyPolicy from "@/presentation/pages/PrivacyPolicy";
+import RetentionPolicy from "@/presentation/pages/RetentionPolicy";
+import SecurityPolicy from "@/presentation/pages/SecurityPolicy";
 
 export default function App() {
   return (
@@ -20,11 +21,14 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/analyze-image" element={<PrivateRoute><ImageAnalyzer /></PrivateRoute>} />
-        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
-        <Route path="/politica-de-retencao" element={<RetentionPolicy />} />
-        <Route path="/politica-de-seguranca" element={<SecurityPolicy />} />
-
+        <Route
+          path="/analyze-image"
+          element={
+            <PrivateRoute>
+              <ImageAnalyzer />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/my-account"
           element={
@@ -33,7 +37,10 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+        <Route path="/politica-de-retencao" element={<RetentionPolicy />} />
+        <Route path="/politica-de-seguranca" element={<SecurityPolicy />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
