@@ -12,7 +12,6 @@ interface AnalyzeImageResponse {
 export async function analyzeImage(
   file: File,
   signal?: AbortSignal,
-  geminiApiKey?: string,
 ): Promise<AnalyzeImageResponse> {
   const imageBase64 = await fileToBase64(file);
 
@@ -22,12 +21,7 @@ export async function analyzeImage(
       imageBase64,
       mimeType: file.type,
     },
-    {
-      signal,
-      headers: {
-        "X-Gemini-API-Key": geminiApiKey,
-      },
-    },
+    { signal },
   );
 
   return response.data;
