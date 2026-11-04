@@ -4,6 +4,7 @@ import { api } from '@/services/api'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import DashboardLayout from '../components/DashboardLayout'
+import { dashboardSidebarItem } from '@/components/navigation/mainSidebar'
 
 export default function MyAccount() {
   const { logout, user, fetchUser } = useAuth()
@@ -128,6 +129,10 @@ export default function MyAccount() {
     if (value === "analyze") {
       navigate("/analyze-image");
     }
+
+    if (value === "dashboard") {
+      navigate("/dashboard");
+    }
   };
 
   const sidebarItems = [
@@ -152,6 +157,7 @@ export default function MyAccount() {
         </svg>
       )
     },
+    dashboardSidebarItem,
     {
       id: 'profile',
       title: 'Dados da Conta',

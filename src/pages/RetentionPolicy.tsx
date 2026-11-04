@@ -160,6 +160,10 @@ export default function RetentionPolicy() {
                   <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">Justificativa</span>
                   <span className="text-sm text-gray-500 dark:text-gray-400">Princípio de minimização de dados previsto na LGPD. O armazenamento temporário ocorre apenas durante o processamento.</span>
                 </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">Histórico de análises</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">Guardamos apenas o <strong>resultado</strong> de cada análise (veredito, pontuações, evidências, metadados técnicos e nome do arquivo) e uma impressão digital irreversível (hash SHA-256) da imagem — <strong>nunca a imagem em si</strong>. O histórico fica disponível no Dashboard enquanto a conta estiver ativa, pode ser excluído item a item a qualquer momento, entra na exportação de dados e é apagado junto com a conta.</span>
+                </div>
               </div>
             </section>
 
