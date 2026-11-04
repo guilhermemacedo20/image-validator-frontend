@@ -3,10 +3,6 @@ import { useRef, useState } from "react";
 
 import { analyzeImage } from "@/services/aiService";
 
-interface AnalyzeResult {
-  [key: string]: any;
-}
-
 interface ApiErrorResponse {
   error?: string;
 }

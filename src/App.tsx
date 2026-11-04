@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Dashboard from "./pages/Dashboard"
 import ForgotPassword from "./pages/forgotPassword"
 import ImageAnalyzer from "./pages/ImageAnalyser"
 import Login from "./pages/Login"
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/analyze-image" element={<PrivateRoute><ImageAnalyzer /></PrivateRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         <Route path="/politica-de-retencao" element={<RetentionPolicy />} />
         <Route path="/politica-de-seguranca" element={<SecurityPolicy />} />

@@ -68,6 +68,37 @@ export default function DashboardLayout({
         </div>
       </header>
 
+      <nav
+        aria-label="Navegação principal"
+        className="md:hidden sticky top-16 z-40 flex gap-2 overflow-x-auto px-4 py-3 border-b border-gray-200/60 dark:border-gray-800/60 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl"
+      >
+        {sidebarItems.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onTabChange(item.id)}
+            aria-current={currentTab === item.id ? 'page' : undefined}
+            className={`shrink-0 flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium min-h-[44px] ${
+              currentTab === item.id
+                ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200'
+            }`}
+          >
+            {item.icon}
+            {item.title}
+          </button>
+        ))}
+        {onLogout && (
+          <button
+            type="button"
+            onClick={onLogout}
+            className="shrink-0 rounded-xl px-3 py-2 text-sm font-medium min-h-[44px] text-red-500 bg-red-500/10"
+          >
+            Logout
+          </button>
+        )}
+      </nav>
+
       {/* BODY */}
       <div className="flex">
 
