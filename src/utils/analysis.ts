@@ -99,9 +99,9 @@ export function resolveIndicators(result: AnalyzeResult): AnalysisIndicator[] {
 }
 
 export function formatDateTime(iso?: string | null): string {
-  if (!iso) return "—";
+  if (!iso) return "-";
   const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "—";
+  if (Number.isNaN(date.getTime())) return "-";
   return date.toLocaleString("pt-BR", {
     day: "2-digit",
     month: "2-digit",
@@ -117,7 +117,7 @@ export function formatShortDay(dateKey: string): string {
 }
 
 export function formatBytes(bytes?: number | null): string {
-  if (!bytes) return "—";
+  if (!bytes) return "-";
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;

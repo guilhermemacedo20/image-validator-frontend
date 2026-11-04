@@ -1,4 +1,4 @@
-# 🎨 Secure Image Validator — Frontend
+# 🎨 Secure Image Validator - Frontend
 
 ## 📌 Visão Geral
 

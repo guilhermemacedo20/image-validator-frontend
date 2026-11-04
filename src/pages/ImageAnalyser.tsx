@@ -93,7 +93,7 @@ export default function ImageAnalyzer() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Análise de Imagem</h1>
           <p className="text-gray-500 dark:text-gray-400 mt-2">
-            Envie uma imagem para descobrir se ela parece real, gerada por IA ou editada — e por quê.
+            Envie uma imagem para descobrir se ela parece real, gerada por IA ou editada - e por quê.
           </p>
         </div>
 
