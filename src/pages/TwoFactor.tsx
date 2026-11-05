@@ -13,7 +13,7 @@ export default function TwoFactor() {
 
   useEffect(() => {
     if (!twoFactorToken) {
-      navigate('/')
+      navigate('/login')
     }
   }, [twoFactorToken, navigate])
 

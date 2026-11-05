@@ -1,4 +1,7 @@
 import { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
+
+import SiteFooter from './SiteFooter'
 
 import logoP from '../assets/logos/logoP.png'
 import logoW from '../assets/logos/logoW.png'
@@ -50,7 +53,7 @@ export default function DashboardLayout({
         <div className="h-full px-6 flex items-center justify-between">
 
           {/* LOGO */}
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center" aria-label="Página inicial">
 
             <img
               src={logoP}
@@ -64,7 +67,7 @@ export default function DashboardLayout({
               className="h-10 object-contain hidden dark:block"
             />
 
-          </div>
+          </Link>
         </div>
       </header>
 
@@ -189,13 +192,15 @@ export default function DashboardLayout({
         </aside>
 
         {/* CONTENT */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 min-w-0 p-6">
           <div className="max-w-5xl mx-auto">
             {children}
           </div>
         </main>
 
       </div>
+
+      <SiteFooter />
     </div>
   )
 }

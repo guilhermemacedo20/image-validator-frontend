@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import SiteFooter from "@/components/SiteFooter";
+
 export default function SecurityPolicy() {
   const navigate = useNavigate();
 
@@ -263,6 +265,7 @@ export default function SecurityPolicy() {
           </div>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import SiteFooter from "@/components/SiteFooter";
+
 export default function RetentionPolicy() {
   const navigate = useNavigate();
 
@@ -218,6 +220,7 @@ export default function RetentionPolicy() {
           </div>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

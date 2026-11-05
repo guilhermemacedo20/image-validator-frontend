@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Dashboard from "./pages/Dashboard"
 import ForgotPassword from "./pages/forgotPassword"
+import Home from "./pages/Home"
 import ImageAnalyzer from "./pages/ImageAnalyser"
 import Login from "./pages/Login"
 import MyAccount from "./pages/MyAccount"
@@ -16,7 +17,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/2fa" element={<TwoFactor />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

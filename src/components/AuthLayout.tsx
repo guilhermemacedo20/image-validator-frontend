@@ -1,4 +1,7 @@
 import { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
+
+import SiteFooter from './SiteFooter'
 
 import logo from '../assets/logos/tipoW.png'
 
@@ -14,8 +17,8 @@ export default function AuthLayout({
   children
 }: AuthLayoutProps) {
   return (
-    <div className="bg-gray-100 dark:bg-gray-950">
-      <div className="flex h-screen">
+    <div className="bg-gray-100 dark:bg-gray-950 min-h-screen flex flex-col">
+      <div className="flex flex-1 min-h-[640px]">
 
         {/* Lado esquerdo */}
         <div className="hidden lg:block lg:w-2/3 relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900">
@@ -43,7 +46,17 @@ export default function AuthLayout({
         {/* Lado direito */}
         <div className="flex items-center justify-center w-full lg:w-1/3 px-6">
 
-          <div className="w-full max-w-md">
+          <div className="w-full max-w-md py-8">
+
+            <Link
+              to="/"
+              className="mb-4 inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Voltar para o início
+            </Link>
 
             {/* Card */}
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8 border border-gray-200 dark:border-gray-800">
@@ -64,6 +77,8 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
+
+      <SiteFooter compact />
     </div>
   )
 }

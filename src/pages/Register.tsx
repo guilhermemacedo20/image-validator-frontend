@@ -55,7 +55,7 @@ export default function Register() {
 
       await register(email, password, consent);
       setAccountCreated(true);
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/login"), 2000);
     } catch (err: any) {
       setError(err.response?.data?.error || "Erro ao criar conta");
     }
@@ -151,7 +151,7 @@ export default function Register() {
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
           className="w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-purple-700 to-purple-500 hover:from-purple-600 hover:to-purple-400 active:scale-[0.98] transition-all shadow-lg"
         >
           Fazer login

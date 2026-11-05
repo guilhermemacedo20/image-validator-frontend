@@ -51,7 +51,7 @@ export default function ResetPassword() {
       setSuccess("Senha alterada com sucesso!")
 
       setTimeout(() => {
-        navigate("/")
+        navigate("/login")
       }, 2000)
     } catch (err: any) {
       setError(err.response?.data?.error || "Token inválido ou expirado")
@@ -104,7 +104,7 @@ export default function ResetPassword() {
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
           className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
           Voltar para login
