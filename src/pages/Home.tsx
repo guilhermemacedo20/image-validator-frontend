@@ -150,12 +150,15 @@ function ExampleResult() {
       setFilled(true);
       return;
     }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setFilled(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.4 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setFilled(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
@@ -168,17 +171,22 @@ function ExampleResult() {
       <p className="text-xs font-semibold uppercase tracking-wider text-violet-700 dark:text-violet-300">
         Exemplo de resultado
       </p>
-      <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">Provável IA</p>
+      <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+        Provável IA
+      </p>
       <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-        A imagem tem vários sinais de ter sido criada por inteligência artificial.
+        A imagem tem vários sinais de ter sido criada por inteligência
+        artificial.
       </p>
 
       <div className="mt-5 flex justify-between text-sm">
         <span className="text-gray-600 dark:text-gray-300">
-          Feita por IA <strong className="text-gray-900 dark:text-white">92%</strong>
+          Feita por IA{" "}
+          <strong className="text-gray-900 dark:text-white">92%</strong>
         </span>
         <span className="text-gray-600 dark:text-gray-300">
-          Foto real <strong className="text-gray-900 dark:text-white">8%</strong>
+          Foto real{" "}
+          <strong className="text-gray-900 dark:text-white">8%</strong>
         </span>
       </div>
       <div
@@ -196,16 +204,23 @@ function ExampleResult() {
         />
       </div>
 
-      <p className="mt-5 text-sm font-semibold text-gray-800 dark:text-gray-100">Por quê?</p>
+      <p className="mt-5 text-sm font-semibold text-gray-800 dark:text-gray-100">
+        Por quê?
+      </p>
       <ul className="mt-2 space-y-2 text-sm text-gray-700 dark:text-gray-200">
-        {["Mão com dedos a mais", "Luz e sombras que não combinam com o fundo", "Pele lisa demais, sem textura natural"].map(
-          (reason) => (
-            <li key={reason} className="flex items-start gap-2">
-              <span aria-hidden="true" className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#6250d6] dark:bg-[#9085e9]" />
-              {reason}
-            </li>
-          ),
-        )}
+        {[
+          "Mão com dedos a mais",
+          "Luz e sombras que não combinam com o fundo",
+          "Pele lisa demais, sem textura natural",
+        ].map((reason) => (
+          <li key={reason} className="flex items-start gap-2">
+            <span
+              aria-hidden="true"
+              className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-[#6250d6] dark:bg-[#9085e9]"
+            />
+            {reason}
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -217,7 +232,11 @@ function SignsTrainer() {
 
   return (
     <div className="rounded-3xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/70 p-6 md:p-8 shadow-xl">
-      <div role="tablist" aria-label="Sinais para observar" className="flex flex-wrap gap-2">
+      <div
+        role="tablist"
+        aria-label="Sinais para observar"
+        className="flex flex-wrap gap-2"
+      >
         {SIGNS.map((sign) => (
           <button
             key={sign.id}
@@ -245,8 +264,12 @@ function SignsTrainer() {
         aria-labelledby={`tab-${current.id}`}
         className="mt-6 motion-safe:animate-[fadeIn_.4s_ease-out]"
       >
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{current.title}</h3>
-        <p className="mt-3 text-lg text-gray-700 dark:text-gray-200 leading-relaxed">{current.text}</p>
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+          {current.title}
+        </h3>
+        <p className="mt-3 text-lg text-gray-700 dark:text-gray-200 leading-relaxed">
+          {current.text}
+        </p>
         <p className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900 px-4 py-2 text-sm font-medium text-amber-900 dark:text-amber-200">
           <svg {...icon} className="w-4 h-4">
             <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z" />
@@ -281,17 +304,46 @@ export default function Home() {
 
       <header className="sticky top-0 z-50 border-b border-gray-200/60 dark:border-gray-800/60 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2" aria-label="DALE — página inicial">
+          <Link
+            to="/"
+            className="flex items-center gap-2"
+            aria-label="Página inicial"
+          >
             <img src={logoP} alt="" className="h-9 block dark:hidden" />
             <img src={logoW} alt="" className="h-9 hidden dark:block" />
-            <span className="font-extrabold tracking-wide text-purple-700 dark:text-purple-300">{PROJECT.name}</span>
+            <span className="font-extrabold tracking-wide text-purple-700 dark:text-purple-300">
+              {PROJECT.name}
+            </span>
           </Link>
 
-          <nav aria-label="Seções da página" className="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-300">
-            <a href="#problemas" className="hover:text-purple-600 dark:hover:text-purple-400">Problemas</a>
-            <a href="#como-funciona" className="hover:text-purple-600 dark:hover:text-purple-400">Como funciona</a>
-            <a href="#treine" className="hover:text-purple-600 dark:hover:text-purple-400">Treine seu olhar</a>
-            <a href="#duvidas" className="hover:text-purple-600 dark:hover:text-purple-400">Dúvidas</a>
+          <nav
+            aria-label="Seções da página"
+            className="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-300"
+          >
+            <a
+              href="#problemas"
+              className="hover:text-purple-600 dark:hover:text-purple-400"
+            >
+              Problemas
+            </a>
+            <a
+              href="#como-funciona"
+              className="hover:text-purple-600 dark:hover:text-purple-400"
+            >
+              Como funciona
+            </a>
+            <a
+              href="#treine"
+              className="hover:text-purple-600 dark:hover:text-purple-400"
+            >
+              Treine seu olhar
+            </a>
+            <a
+              href="#duvidas"
+              className="hover:text-purple-600 dark:hover:text-purple-400"
+            >
+              Dúvidas
+            </a>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -329,11 +381,16 @@ export default function Home() {
               Projeto acadêmico de {PROJECT.course}
             </p>
             <h1 className="mt-5 text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
-              Essa imagem é <span className="text-purple-600 dark:text-purple-400">real?</span>
+              Essa imagem é{" "}
+              <span className="text-purple-600 dark:text-purple-400">
+                real?
+              </span>
             </h1>
             <p className="mt-5 text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
-              Hoje a inteligência artificial cria fotos tão realistas que ficou difícil saber o que é verdade.
-              O {PROJECT.name} analisa a imagem e explica, de um jeito simples, se ela parece real, feita por IA ou editada.
+              Hoje a inteligência artificial cria fotos tão realistas que ficou
+              difícil saber o que é verdade. O {PROJECT.name} analisa a imagem e
+              explica, de um jeito simples, se ela parece real, feita por IA ou
+              editada.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -353,7 +410,10 @@ export default function Home() {
 
             {!logged && (
               <p className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                <svg {...icon} className="w-4 h-4 text-purple-600 dark:text-purple-400">
+                <svg
+                  {...icon}
+                  className="w-4 h-4 text-purple-600 dark:text-purple-400"
+                >
                   <rect x="4" y="11" width="16" height="10" rx="2" />
                   <path d="M8 11V7a4 4 0 0 1 8 0v4" />
                 </svg>
@@ -364,19 +424,33 @@ export default function Home() {
 
           <Reveal delay={150} className="flex justify-center">
             <div className="relative w-full max-w-md">
-              <img src={tipoP} alt={`Logo do ${PROJECT.name}`} className="w-56 mx-auto mb-8 block dark:hidden" />
-              <img src={tipoW} alt={`Logo do ${PROJECT.name}`} className="w-56 mx-auto mb-8 hidden dark:block" />
+              <img
+                src={tipoP}
+                alt={`Logo do ${PROJECT.name}`}
+                className="w-56 mx-auto mb-8 block dark:hidden"
+              />
+              <img
+                src={tipoW}
+                alt={`Logo do ${PROJECT.name}`}
+                className="w-56 mx-auto mb-8 hidden dark:block"
+              />
               <ExampleResult />
             </div>
           </Reveal>
         </section>
 
-        <section id="problemas" className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40">
+        <section
+          id="problemas"
+          className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40"
+        >
           <div className="max-w-6xl mx-auto px-6">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-bold text-center">Os principais problemas da IA hoje</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-center">
+                Os principais problemas da IA hoje
+              </h2>
               <p className="mt-3 text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                A mesma tecnologia que ajuda muita gente também é usada para enganar. Veja os riscos mais comuns.
+                A mesma tecnologia que ajuda muita gente também é usada para
+                enganar. Veja os riscos mais comuns.
               </p>
             </Reveal>
 
@@ -388,7 +462,9 @@ export default function Home() {
                       {problem.icon}
                     </div>
                     <h3 className="mt-4 text-lg font-bold">{problem.title}</h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-300">{problem.text}</p>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      {problem.text}
+                    </p>
                   </article>
                 </Reveal>
               ))}
@@ -396,7 +472,8 @@ export default function Home() {
 
             <Reveal>
               <p className="mt-10 text-center text-lg font-semibold text-purple-700 dark:text-purple-300">
-                Dica: desconfie de imagens que causam muita emoção e não têm fonte confiável.
+                Dica: desconfie de imagens que causam muita emoção e não têm
+                fonte confiável.
               </p>
             </Reveal>
           </div>
@@ -405,10 +482,13 @@ export default function Home() {
         <section id="como-funciona" className="scroll-mt-20 py-16">
           <div className="max-w-6xl mx-auto px-6">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-bold text-center">Como o {PROJECT.name} ajuda</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-center">
+                Como o {PROJECT.name} ajuda
+              </h2>
               <p className="mt-3 text-center text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Ele usa inteligência artificial para olhar a imagem com atenção e mostrar se ela parece real,
-                feita por IA ou editada, explicando o porquê.
+                Ele usa inteligência artificial para olhar a imagem com atenção
+                e mostrar se ela parece real, feita por IA ou editada,
+                explicando o porquê.
               </p>
             </Reveal>
 
@@ -420,7 +500,9 @@ export default function Home() {
                       {index + 1}
                     </span>
                     <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
-                    <p className="mt-2 text-gray-600 dark:text-gray-300">{step.text}</p>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      {step.text}
+                    </p>
                     {index === 0 && !logged && (
                       <Link
                         to="/login"
@@ -436,18 +518,25 @@ export default function Home() {
 
             <Reveal>
               <p className="mt-10 text-center text-gray-600 dark:text-gray-300">
-                Ele observa mãos e rostos, luz e sombras, texturas, letras na imagem e sinais de montagem.
+                Ele observa mãos e rostos, luz e sombras, texturas, letras na
+                imagem e sinais de montagem.
               </p>
             </Reveal>
           </div>
         </section>
 
-        <section id="treine" className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40">
+        <section
+          id="treine"
+          className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40"
+        >
           <div className="max-w-4xl mx-auto px-6">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-bold text-center">Treine seu olhar</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-center">
+                Treine seu olhar
+              </h2>
               <p className="mt-3 mb-10 text-center text-gray-600 dark:text-gray-300">
-                Mesmo sem o {PROJECT.name}, você pode procurar estes sinais. Toque em cada um para aprender.
+                Mesmo sem o {PROJECT.name}, você pode procurar estes sinais.
+                Toque em cada um para aprender.
               </p>
               <SignsTrainer />
             </Reveal>
@@ -464,10 +553,13 @@ export default function Home() {
                     <path d="M9 12l2 2 4-4" />
                   </svg>
                 </div>
-                <h2 className="mt-4 text-2xl font-bold">Seus dados protegidos</h2>
+                <h2 className="mt-4 text-2xl font-bold">
+                  Seus dados protegidos
+                </h2>
                 <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Seguimos a lei brasileira de proteção de dados (LGPD). A imagem não fica guardada depois da análise,
-                  e você pode baixar ou apagar seus dados quando quiser.
+                  Seguimos a lei brasileira de proteção de dados (LGPD). A
+                  imagem não fica guardada depois da análise, e você pode baixar
+                  ou apagar seus dados quando quiser.
                 </p>
               </article>
             </Reveal>
@@ -481,18 +573,24 @@ export default function Home() {
                 </div>
                 <h2 className="mt-4 text-2xl font-bold">Use com bom senso</h2>
                 <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">
-                  O resultado é uma ajuda, não uma prova. Antes de compartilhar, confira de onde a imagem veio e se
-                  outros sites confiáveis mostram a mesma coisa.
+                  O resultado é uma ajuda, não uma prova. Antes de compartilhar,
+                  confira de onde a imagem veio e se outros sites confiáveis
+                  mostram a mesma coisa.
                 </p>
               </article>
             </Reveal>
           </div>
         </section>
 
-        <section id="duvidas" className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40">
+        <section
+          id="duvidas"
+          className="scroll-mt-20 py-16 bg-white/60 dark:bg-gray-900/40"
+        >
           <div className="max-w-3xl mx-auto px-6">
             <Reveal>
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Dúvidas comuns</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
+                Dúvidas comuns
+              </h2>
             </Reveal>
             <div className="space-y-3">
               {FAQ.map((item) => (
@@ -502,11 +600,16 @@ export default function Home() {
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold">
                     {item.q}
-                    <span aria-hidden="true" className="text-purple-600 dark:text-purple-400 text-xl transition-transform group-open:rotate-45">
+                    <span
+                      aria-hidden="true"
+                      className="text-purple-600 dark:text-purple-400 text-xl transition-transform group-open:rotate-45"
+                    >
                       +
                     </span>
                   </summary>
-                  <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">{item.a}</p>
+                  <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {item.a}
+                  </p>
                 </details>
               ))}
             </div>
@@ -516,7 +619,9 @@ export default function Home() {
         <section className="py-16">
           <Reveal className="max-w-5xl mx-auto px-6">
             <div className="rounded-3xl bg-gradient-to-r from-purple-700 to-indigo-700 px-8 py-12 text-center text-white shadow-2xl">
-              <h2 className="text-3xl md:text-4xl font-bold">Pronto para conferir uma imagem?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Pronto para conferir uma imagem?
+              </h2>
               <p className="mt-3 text-purple-100 text-lg">
                 {logged
                   ? "Você já está conectado. É só enviar a imagem."
