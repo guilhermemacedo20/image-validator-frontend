@@ -125,6 +125,19 @@ export default function Register() {
           </span>
         )}
 
+        <div className="rounded-lg border border-purple-200 dark:border-purple-900 bg-purple-50 dark:bg-purple-950/30 p-3 text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="font-semibold text-purple-800 dark:text-purple-200">
+            Por que pedimos esses dados?
+          </p>
+          <ul className="mt-1 list-disc pl-4 space-y-0.5">
+            <li>Pedimos só e-mail e senha.</li>
+            <li>O e-mail identifica sua conta e permite recuperar a senha.</li>
+            <li>A senha é guardada de forma protegida: nem a equipe consegue vê-la.</li>
+            <li>A imagem enviada para análise não fica salva.</li>
+            <li>Você pode baixar ou apagar seus dados quando quiser, como garante a LGPD (Lei Geral de Proteção de Dados).</li>
+          </ul>
+        </div>
+
         <label className="flex items-start gap-2 text-sm text-gray-400">
           <input
             type="checkbox"
@@ -133,10 +146,10 @@ export default function Register() {
             className="mt-1"
           />
           <span>
-            Aceito os termos de uso, {" "}
+            Aceito os termos de uso,{" "}
             a <a href="/politica-de-privacidade" className="text-purple-600 hover:underline">política de privacidade</a>,{" "}
             a <a href="/politica-de-retencao" className="text-purple-600 hover:underline">política de retenção</a>{" "}
-            e a <a href="/politica-de-seguranca" className="text-purple-600 hover:underline">política de segurança</a>.
+            e a <a href="/politica-de-seguranca" className="text-purple-600 hover:underline">política de segurança</a>,
             para fins de autenticação e uso da plataforma.
           </span>
         </label>

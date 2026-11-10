@@ -68,6 +68,40 @@ const PROBLEMS = [
   },
 ];
 
+const ANALYSIS_POINTS = [
+  {
+    title: "Os detalhes da imagem",
+    text: "Mãos, rostos, luz, sombras e letras, onde a IA costuma errar.",
+    icon: (
+      <svg {...icon}>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.3-4.3" />
+      </svg>
+    ),
+  },
+  {
+    title: "Os metadados",
+    text: "Informações escondidas no arquivo da foto, como data, câmera e programa usado para criar ou editar a imagem.",
+    icon: (
+      <svg {...icon}>
+        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+        <path d="M14 3v6h6" />
+        <path d="M8 13h8M8 17h5" />
+      </svg>
+    ),
+  },
+  {
+    title: "A explicação",
+    text: "Mostra a chance de a imagem ser real, feita por IA ou editada, e explica o porquê em palavras simples.",
+    icon: (
+      <svg {...icon}>
+        <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />
+        <path d="M9 11h6M9 14h4" />
+      </svg>
+    ),
+  },
+];
+
 const STEPS = [
   {
     title: "Entre na sua conta",
@@ -123,12 +157,24 @@ const SIGNS = [
 
 const FAQ = [
   {
+    q: "O que é o DALE?",
+    a: "É uma ferramenta criada por alunos de Engenharia de Software como projeto acadêmico. Ela analisa uma imagem e mostra se ela parece real, feita por inteligência artificial ou editada, explicando os motivos.",
+  },
+  {
+    q: "O DALE é o mesmo que o DALL·E?",
+    a: "Não. Apesar do nome parecido, o DALE não tem relação com o DALL·E, que é um programa da OpenAI que cria imagens. O DALE faz o contrário: ajuda a descobrir se uma imagem foi criada por IA.",
+  },
+  {
+    q: "O que são metadados?",
+    a: "São informações que ficam guardadas dentro do arquivo da foto, como a data, o modelo da câmera ou o programa usado para editar. O DALE lê essas informações para ajudar na análise.",
+  },
+  {
     q: "Preciso pagar para usar?",
     a: "Não. O DALE é um projeto acadêmico e gratuito. Você só precisa criar uma conta.",
   },
   {
     q: "Por que preciso fazer login para analisar?",
-    a: "Para proteger o serviço contra uso abusivo e para guardar o histórico das suas análises só para você.",
+    a: "Para proteger o serviço contra uso abusivo e para guardar o histórico das suas análises só para você. Pedimos apenas e-mail e senha, e tudo segue a LGPD (Lei Geral de Proteção de Dados).",
   },
   {
     q: "A minha foto fica salva?",
@@ -321,6 +367,12 @@ export default function Home() {
             className="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-300"
           >
             <a
+              href="#conheca"
+              className="hover:text-purple-600 dark:hover:text-purple-400"
+            >
+              O que é o {PROJECT.name}
+            </a>
+            <a
               href="#problemas"
               className="hover:text-purple-600 dark:hover:text-purple-400"
             >
@@ -378,7 +430,7 @@ export default function Home() {
         <section className="max-w-6xl mx-auto px-6 pt-14 pb-16 md:pt-20 grid gap-12 lg:grid-cols-2 items-center">
           <Reveal>
             <p className="inline-flex items-center gap-2 rounded-full border border-purple-200 dark:border-purple-900 bg-white/70 dark:bg-gray-900/60 px-3 py-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
-              Projeto acadêmico de {PROJECT.course}
+              Ferramenta criada por alunos de {PROJECT.course}
             </p>
             <h1 className="mt-5 text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
               Essa imagem é{" "}
@@ -387,10 +439,10 @@ export default function Home() {
               </span>
             </h1>
             <p className="mt-5 text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-xl">
-              Hoje a inteligência artificial cria fotos tão realistas que ficou
-              difícil saber o que é verdade. O {PROJECT.name} analisa a imagem e
-              explica, de um jeito simples, se ela parece real, feita por IA ou
-              editada.
+              Hoje a inteligência artificial (IA) cria fotos tão realistas que
+              ficou difícil saber o que é verdade. Conheça o {PROJECT.name}, a
+              ferramenta que analisa a imagem e explica, de um jeito simples, se
+              ela parece real, feita por IA ou editada.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -437,6 +489,63 @@ export default function Home() {
               <ExampleResult />
             </div>
           </Reveal>
+        </section>
+
+        <section id="conheca" className="scroll-mt-20 py-16">
+          <div className="max-w-6xl mx-auto px-6">
+            <Reveal>
+              <h2 className="text-3xl md:text-4xl font-bold text-center">
+                Conheça o {PROJECT.name}
+              </h2>
+              <p className="mt-4 text-center text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                O {PROJECT.name} é uma ferramenta gratuita criada por alunos de{" "}
+                {PROJECT.course} como projeto acadêmico. Ele ajuda qualquer
+                pessoa a descobrir se uma imagem parece real, feita por
+                inteligência artificial (IA) ou editada. Foi desenvolvido
+                seguindo boas práticas de segurança e a LGPD (Lei Geral de
+                Proteção de Dados).
+              </p>
+            </Reveal>
+
+            <Reveal>
+              <h3 className="mt-12 text-center text-xl font-bold">
+                O que ele analisa
+              </h3>
+            </Reveal>
+            <div className="mt-6 grid gap-5 md:grid-cols-3">
+              {ANALYSIS_POINTS.map((point, index) => (
+                <Reveal key={point.title} delay={index * 100}>
+                  <article className="h-full rounded-3xl border border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/70 p-6 shadow-lg">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 flex items-center justify-center">
+                      {point.icon}
+                    </div>
+                    <h4 className="mt-4 text-lg font-bold">{point.title}</h4>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      {point.text}
+                    </p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal>
+              <div className="mt-10 rounded-3xl border border-purple-200 dark:border-purple-900 bg-purple-50/80 dark:bg-purple-950/30 p-6 md:flex md:items-center md:justify-between md:gap-8">
+                <div>
+                  <p className="font-semibold text-purple-800 dark:text-purple-200">
+                    Quem criou
+                  </p>
+                  <p className="mt-1 text-gray-700 dark:text-gray-300">
+                    {PROJECT.team.join(" · ")}
+                  </p>
+                </div>
+                <p className="mt-4 md:mt-0 md:max-w-sm text-sm text-gray-600 dark:text-gray-400">
+                  O nome {PROJECT.name} vem de {PROJECT.fullName} (análise
+                  profunda baseada em evidências) e não tem relação com o
+                  DALL·E, gerador de imagens da OpenAI.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         <section
@@ -519,7 +628,8 @@ export default function Home() {
             <Reveal>
               <p className="mt-10 text-center text-gray-600 dark:text-gray-300">
                 Ele observa mãos e rostos, luz e sombras, texturas, letras na
-                imagem e sinais de montagem.
+                imagem, sinais de montagem e os metadados do arquivo
+                (informações como data, câmera e programa usado).
               </p>
             </Reveal>
           </div>
@@ -557,9 +667,11 @@ export default function Home() {
                   Seus dados protegidos
                 </h2>
                 <p className="mt-3 text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Seguimos a lei brasileira de proteção de dados (LGPD). A
-                  imagem não fica guardada depois da análise, e você pode baixar
-                  ou apagar seus dados quando quiser.
+                  Pedimos só e-mail e senha, para proteger sua conta e guardar
+                  o seu histórico só para você. Seguimos a LGPD (Lei Geral de
+                  Proteção de Dados): a imagem não fica guardada depois da
+                  análise, e você pode baixar ou apagar seus dados quando
+                  quiser.
                 </p>
               </article>
             </Reveal>
